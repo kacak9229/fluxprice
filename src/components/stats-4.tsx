@@ -7,7 +7,7 @@ export default function StatsSection() {
             Proven Results for Growing E-Commerce Brands
           </h2>
           <p>
-            FluxPrice is more than just pricing automation —
+            Fluxprice AI is more than just pricing automation —
             <span className="font-medium"> it's an AI-powered ecosystem</span>
             that tracks competitors, predicts demand, and boosts revenue in real
             time.
@@ -17,7 +17,7 @@ export default function StatsSection() {
         <div className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:gap-24">
           <div>
             <p>
-              From Shopify stores to scaling DTC brands, FluxPrice delivers
+              From Shopify stores to scaling DTC brands, Fluxprice AI delivers
               measurable impact with automated AI pricing and actionable
               insights.
             </p>
@@ -40,9 +40,9 @@ export default function StatsSection() {
           <div className="relative">
             <blockquote className="border-l-4 pl-4">
               <p>
-                “FluxPrice boosted our revenue by 12% in the first month without
-                heavy discounting. It's like having a smart pricing team inside
-                Shopify.”
+                “Fluxprice AI boosted our revenue by 12% in the first month
+                without heavy discounting. It's like having a smart pricing team
+                inside Shopify.”
               </p>
               <div className="mt-6 space-y-3">
                 <cite className="block font-medium">Sarah Nguyen, Founder</cite>

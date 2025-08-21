@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronRight, Mail, SendHorizonal } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { TextEffect } from "@/components/ui/text-effect";
@@ -126,9 +128,10 @@ export default function HeroSection() {
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="h1"
-                  className="mt-8 text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
+                  className="mt-8 text-balance text-5xl md:text-5xl lg:mt-16 xl:text-[4.25rem]"
                 >
-                  Boost Sales by 30% with AI-Powered Dynamic Pricing
+                  Fluxprice AI: Boost Shopify Sales Up to 30% with Profit-Safe
+                  Dynamic Pricing
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -138,9 +141,9 @@ export default function HeroSection() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  FluxPrice automatically adjusts your Shopify prices to beat
-                  competitors and maximize profit margins. Stop guessing, start
-                  growing.
+                  Real-time intelligent pricing that matches competitor prices
+                  and converts high-value customers before they leave while
+                  protecting your margins.
                 </TextEffect>
 
                 <AnimatedGroup
@@ -157,37 +160,18 @@ export default function HeroSection() {
                   }}
                   className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
                 >
-                  <div key={1} className="">
-                    <form
-                      action=""
-                      className="mx-auto max-w-sm lg:my-3 lg:ml-0 lg:mr-auto"
-                    >
-                      <div className="bg-background has-[input:focus]:ring-muted relative grid grid-cols-[1fr_auto] items-center rounded-[calc(var(--radius)+0.75rem)] border pr-3 shadow shadow-zinc-950/5 has-[input:focus]:ring-2">
-                        <Mail className="text-caption pointer-events-none absolute inset-y-0 left-5 my-auto size-5" />
-
-                        <input
-                          placeholder="Your mail address"
-                          className="h-14 w-full bg-transparent pl-12 focus:outline-none"
-                          type="email"
-                        />
-
-                        <div className="md:pr-1.5 lg:pr-0">
-                          <Button
-                            aria-label="submit"
-                            className="rounded-(--radius)"
-                          >
-                            <span className="hidden md:block">
-                              Join the Waitlist
-                            </span>
-                            <SendHorizonal
-                              className="relative mx-auto size-5 md:hidden"
-                              strokeWidth={2}
-                            />
-                          </Button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                  <Button
+                    size="lg"
+                    onClick={() => {
+                      document.getElementById("cta")?.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                    }}
+                    className="px-8 py-4 text-lg"
+                  >
+                    Secure Early Access
+                    <ArrowRight className="ml-2 size-5" />
+                  </Button>
                 </AnimatedGroup>
               </div>
             </div>

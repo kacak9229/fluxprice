@@ -3,11 +3,11 @@ import { Mail, SendHorizonal } from "lucide-react";
 
 export default function CallToAction() {
   return (
-    <section className="py-16 md:py-32">
+    <section id="cta" className="py-16 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Beat the Market. Join the Waitlist.
+            Beat the Market. Secure Early Access.
           </h2>
           <p className="mt-4 text-muted-foreground">
             Lock in early access and stay ahead of every price move.
@@ -25,7 +25,7 @@ export default function CallToAction() {
 
               <div className="md:pr-1.5 lg:pr-0">
                 <Button aria-label="submit" className="rounded-(--radius)">
-                  <span className="hidden md:block">Join Waitlist</span>
+                  <span className="hidden md:block">Secure Early Access</span>
                   <SendHorizonal
                     className="relative mx-auto size-5 md:hidden"
                     strokeWidth={2}

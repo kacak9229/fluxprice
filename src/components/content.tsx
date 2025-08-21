@@ -11,7 +11,7 @@ export default function ContentSection() {
                 Optimize Your Prices with AI Assistance
               </h2>
               <p className="text-muted-foreground mb-12 mt-4 text-xl">
-                FluxPrice uses AI-driven insights to help Shopify brands
+                Fluxprice AI uses AI-driven insights to help Shopify brands
                 automate pricing, track competitors, and boost margins—all with
                 explainable decisions.
               </p>
@@ -50,7 +50,7 @@ export default function ContentSection() {
                   { value: "$200k+", label: "Revenue Generated" },
                   { value: "43%", label: "Avg. Margin Lift" },
                   { value: "1,200+", label: "Price Changes Automated" },
-                  { value: "300+", label: "Brands Using FluxPrice" },
+                  { value: "300+", label: "Brands Using Fluxprice AI" },
                 ].map((stat, index) => (
                   <li key={index} className="-ml-0.5 flex items-center gap-1.5">
                     <ArrowRight className="size-4 opacity-50" />

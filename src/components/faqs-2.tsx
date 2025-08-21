@@ -12,33 +12,33 @@ export default function FAQsTwo() {
   const faqItems = [
     {
       id: "item-1",
-      question: "What is FluxPrice?",
+      question: "What is Fluxprice AI?",
       answer:
-        "FluxPrice is an AI-powered platform that automates price monitoring, competitor tracking, and market analytics to help businesses optimize their pricing strategies in real time.",
+        "Fluxprice AI is an AI-powered platform that automates price monitoring, competitor tracking, and market analytics to help businesses optimize their pricing strategies in real time.",
     },
     {
       id: "item-2",
-      question: "Who is FluxPrice for?",
+      question: "Who is Fluxprice AI for?",
       answer:
-        "FluxPrice is designed for e-commerce brands, SaaS companies, and marketplaces that want to stay competitive, track market trends, and maximize revenue with dynamic pricing insights.",
+        "Fluxprice AI is designed for e-commerce brands, SaaS companies, and marketplaces that want to stay competitive, track market trends, and maximize revenue with dynamic pricing insights.",
     },
     {
       id: "item-3",
-      question: "How does FluxPrice track competitor prices?",
+      question: "How does Fluxprice AI track competitor prices?",
       answer:
         "Our platform uses AI-driven web crawlers and APIs to monitor competitor prices across multiple channels. We provide real-time updates and automated alerts when changes occur.",
     },
     {
       id: "item-4",
-      question: "Do I need coding skills to use FluxPrice?",
+      question: "Do I need coding skills to use Fluxprice AI?",
       answer:
-        "Not at all. FluxPrice offers an intuitive dashboard that requires no coding knowledge. For advanced users, we also provide API access for custom integrations.",
+        "Not at all. Fluxprice AI offers an intuitive dashboard that requires no coding knowledge. For advanced users, we also provide API access for custom integrations.",
     },
     {
       id: "item-5",
-      question: "What integrations does FluxPrice support?",
+      question: "What integrations does Fluxprice AI support?",
       answer:
-        "FluxPrice integrates seamlessly with platforms like Shopify, WooCommerce, BigCommerce, and various ERP/CRM systems. Custom API integrations are also available.",
+        "Fluxprice AI integrates seamlessly with platforms like Shopify, WooCommerce, BigCommerce, and various ERP/CRM systems. Custom API integrations are also available.",
     },
     {
       id: "item-6",
@@ -50,17 +50,17 @@ export default function FAQsTwo() {
       id: "item-7",
       question: "Is my data secure?",
       answer:
-        "Yes, we prioritize security. FluxPrice uses encrypted connections (SSL/TLS) and complies with GDPR and industry best practices to protect your business data.",
+        "Yes, we prioritize security. Fluxprice AI uses encrypted connections (SSL/TLS) and complies with GDPR and industry best practices to protect your business data.",
     },
     {
       id: "item-8",
       question: "What pricing plans are available?",
       answer:
-        "FluxPrice offers flexible plans based on your needs—from startups to enterprise-scale businesses. Visit our pricing page to see the full breakdown.",
+        "Fluxprice AI offers flexible plans based on your needs—from startups to enterprise-scale businesses. Visit our pricing page to see the full breakdown.",
     },
     {
       id: "item-9",
-      question: "Can I try FluxPrice for free?",
+      question: "Can I try Fluxprice AI for free?",
       answer:
         "Yes, we offer a 14-day free trial with full access to core features. No credit card required to get started.",
     },

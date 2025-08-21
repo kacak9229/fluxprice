@@ -5,7 +5,7 @@ export default function StatsSection() {
         <div className="mx-auto max-w-5xl px-6">
           <div>
             <h2 className="text-4xl font-semibold lg:text-5xl">
-              FluxPrice in numbers
+              Fluxprice AI in numbers
             </h2>
             <p className="text-muted-foreground mt-4 text-balance text-lg">
               Helping Shopify brands maximize revenue with AI-driven dynamic
@@ -27,7 +27,7 @@ export default function StatsSection() {
             </div>
             <div>
               <div className="text-foreground text-4xl font-bold">300+</div>
-              <p className="text-muted-foreground">Brands Using FluxPrice</p>
+              <p className="text-muted-foreground">Brands Using Fluxprice AI</p>
             </div>
           </div>
         </div>

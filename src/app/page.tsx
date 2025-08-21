@@ -7,6 +7,7 @@ import TestimonialSection from "@/components/testimonials";
 import LogoCloud from "@/components/logo-cloud";
 import IntegrationsSection from "@/components/integrations-4";
 import FAQsTwo from "@/components/faqs-2";
+import PricingSection from "@/components/pricing-section";
 import CTA from "@/components/call-to-action";
 import Footer from "@/components/footer";
 
@@ -38,7 +39,10 @@ export default function Home() {
       {/* 8. FAQs to handle objections */}
       <FAQsTwo />
 
-      {/* 9. Final CTA to convert */}
+      {/* 9. Pricing to show value */}
+      <PricingSection />
+
+      {/* 10. Final CTA to convert */}
       <CTA />
 
       {/* 10. Footer */}

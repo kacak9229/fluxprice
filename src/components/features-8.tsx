@@ -19,7 +19,7 @@ export default function FeaturesSection() {
                   AI-Powered Revenue Boost
                 </h2>
                 <p className="mt-2 text-center text-muted-foreground">
-                  Stores using FluxPrice see an average **30% increase in
+                  Stores using Fluxprice AI see an average **30% increase in
                   revenue** with automated, intelligent pricing.
                 </p>
               </CardContent>
@@ -39,7 +39,7 @@ export default function FeaturesSection() {
                     Smart Price Automation
                   </h2>
                   <p className="text-foreground">
-                    FluxPrice automatically adjusts prices based on **demand,
+                    Fluxprice AI automatically adjusts prices based on **demand,
                     competition, and buyer intent** — all in real time.
                   </p>
                 </div>
@@ -60,7 +60,7 @@ export default function FeaturesSection() {
                     Competitor Tracking
                   </h2>
                   <p className="text-foreground">
-                    Monitor competitor pricing effortlessly. FluxPrice tracks
+                    Monitor competitor pricing effortlessly. Fluxprice AI tracks
                     and reacts to changes instantly, so you always stay ahead.
                   </p>
                 </div>
@@ -90,8 +90,8 @@ export default function FeaturesSection() {
                     Seamless Shopify Integration
                   </h2>
                   <p className="text-foreground">
-                    One-click install. FluxPrice works natively with Shopify —
-                    no messy setup or code required.
+                    One-click install. Fluxprice AI works natively with Shopify
+                    — no messy setup or code required.
                   </p>
                 </div>
               </CardContent>

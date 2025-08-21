@@ -16,7 +16,7 @@ export default function Features() {
             AI-Powered Pricing to Maximize Your Store's Revenue
           </h2>
           <p className="text-muted-foreground">
-            FluxPrice goes beyond simple discounts — it uses real-time AI to
+            Fluxprice AI goes beyond simple discounts — it uses real-time AI to
             optimize pricing, track competitors, and increase revenue
             automatically.
           </p>
@@ -29,8 +29,8 @@ export default function Features() {
               <h3 className="text-sm font-medium">Boost Revenue</h3>
             </div>
             <p className="text-sm text-muted-foreground">
-              Merchants using FluxPrice see an **average 30% lift in revenue**
-              without aggressive discounting.
+              Merchants using Fluxprice AI see an **average 30% lift in
+              revenue** without aggressive discounting.
             </p>
           </div>
           <div className="space-y-3">
@@ -49,8 +49,8 @@ export default function Features() {
               <h3 className="text-sm font-medium">Competitor Tracking</h3>
             </div>
             <p className="text-sm text-muted-foreground">
-              FluxPrice automatically monitors competitors so you can stay ahead
-              without lifting a finger.
+              Fluxprice AI automatically monitors competitors so you can stay
+              ahead without lifting a finger.
             </p>
           </div>
           <div className="space-y-3">
@@ -69,7 +69,7 @@ export default function Features() {
               <h3 className="text-sm font-medium">Full Control</h3>
             </div>
             <p className="text-sm text-muted-foreground">
-              Set pricing rules, floors, and ceilings. FluxPrice gives you AI
+              Set pricing rules, floors, and ceilings. Fluxprice AI gives you AI
               power without losing control.
             </p>
           </div>
