@@ -1,5 +1,6 @@
 import HeroSection from "@/components/hero-section";
 import FeaturesSection from "@/components/features-section";
+import CoreFeatures from "@/components/core-features";
 import StatsSection from "@/components/stats-4";
 import Features from "@/components/features-4";
 import FeaturesSection8 from "@/components/features-8";
@@ -21,28 +22,31 @@ export default function Home() {
       <LogoCloud />
 
       {/* 3. Primary Features Overview */}
-      <FeaturesSection />
+      {/* <FeaturesSection /> */}
 
-      {/* 4. Stats for credibility */}
+      {/* 4. Core Features Deep Dive */}
+      <CoreFeatures />
+
+      {/* 5. Stats for credibility */}
       <StatsSection />
 
-      {/* 5. Deep Feature Explanations */}
+      {/* 6. Deep Feature Explanations */}
       <Features />
       <FeaturesSection8 />
 
-      {/* 6. Integrations (platform compatibility) */}
-      <IntegrationsSection />
+      {/* 7. Integrations (platform compatibility) */}
+      {/* <IntegrationsSection /> */}
 
-      {/* 7. Testimonials (real-world trust) */}
+      {/* 8. Testimonials (real-world trust) */}
       <TestimonialSection />
 
-      {/* 8. FAQs to handle objections */}
+      {/* 9. FAQs to handle objections */}
       <FAQsTwo />
 
-      {/* 9. Pricing to show value */}
+      {/* 10. Pricing to show value */}
       <PricingSection />
 
-      {/* 10. Final CTA to convert */}
+      {/* 11. Final CTA to convert */}
       <CTA />
 
       {/* 10. Footer */}

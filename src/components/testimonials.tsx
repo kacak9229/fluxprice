@@ -1,55 +1,90 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Star,
+  TrendingUp,
+  DollarSign,
+  Clock,
+  CheckCircle2,
+} from "lucide-react";
 
 type Testimonial = {
   name: string;
   role: string;
+  company: string;
   image: string;
   quote: string;
+  rating: number;
+  result: string;
+  timeframe: string;
 };
 
 const testimonials: Testimonial[] = [
   {
-    name: "Sarah Nguyen",
-    role: "Founder, DTC Apparel Brand",
+    name: "Sarah Chen",
+    role: "Founder",
+    company: "Meridian Goods",
     image: "https://randomuser.me/api/portraits/women/68.jpg",
     quote:
-      "Fluxprice AI helped us boost our revenue by 18% in the first month without relying on heavy discounts. The automated competitor tracking is a lifesaver.",
+      "The pricing intelligence has been transformative. We're making data-driven decisions instead of guessing, and our margins reflect that confidence.",
+    rating: 5,
+    result: "18% revenue increase",
+    timeframe: "First quarter",
   },
   {
-    name: "James Lee",
-    role: "Owner, Home Goods Store",
+    name: "Marcus Thompson",
+    role: "Head of E-commerce",
+    company: "Artisan & Co",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
     quote:
-      "We used to spend hours adjusting prices manually. Fluxprice AI handles it instantly, and every price change comes with a clear explanation I can trust.",
+      "What impressed me most was how quickly we could implement sophisticated pricing strategies. The learning curve was minimal, the impact immediate.",
+    rating: 5,
+    result: "12% margin improvement",
+    timeframe: "Within 6 weeks",
   },
   {
-    name: "Amelia Ross",
-    role: "Founder, Beauty & Skincare Brand",
+    name: "Elena Rodriguez",
+    role: "Co-founder",
+    company: "Luxe Beauty",
     image: "https://randomuser.me/api/portraits/women/45.jpg",
     quote:
-      "The AI-driven insights on buyer intent and dynamic pricing have been incredible. Fluxprice AI feels like having a pricing analyst built right into Shopify.",
+      "The market insights help us understand not just what to price, but when to adjust. It's like having a seasoned analyst on the team.",
+    rating: 5,
+    result: "24% conversion lift",
+    timeframe: "Over 3 months",
   },
   {
-    name: "Daniel Carter",
-    role: "Owner, Electronics E-commerce",
+    name: "David Park",
+    role: "Operations Director",
+    company: "TechForward",
     image: "https://randomuser.me/api/portraits/men/15.jpg",
     quote:
-      "Fluxprice AI automatically adjusted our prices to match competitors while protecting margins. We saw a 22% lift in profit within weeks.",
+      "In our competitive space, pricing precision matters. This platform gives us the confidence to compete strategically rather than reactively.",
+    rating: 5,
+    result: "22% profit growth",
+    timeframe: "Last quarter",
   },
   {
-    name: "Maria Gomez",
-    role: "Founder, Lifestyle & Home Brand",
+    name: "Isabella Martinez",
+    role: "Founder",
+    company: "Casa Modern",
     image: "https://randomuser.me/api/portraits/women/22.jpg",
     quote:
-      "As a small team, we needed something hands-off. Fluxprice AI does all the heavy lifting so I can focus on marketing and growing my business.",
+      "As a smaller operation, we needed enterprise-level pricing intelligence without the complexity. This delivers exactly that balance.",
+    rating: 5,
+    result: "14% revenue growth",
+    timeframe: "Past 4 months",
   },
   {
-    name: "Robert Chan",
-    role: "Owner, Outdoor Gear Store",
+    name: "James Wilson",
+    role: "CEO",
+    company: "Alpine Gear",
     image: "https://randomuser.me/api/portraits/men/23.jpg",
     quote:
-      "Fluxprice AI is a game-changer. We no longer worry about underpricing during demand spikes. It’s like having an automated pricing manager 24/7.",
+      "The seasonal pricing optimization has been remarkable. We're capturing demand peaks more effectively while maintaining healthy margins year-round.",
+    rating: 5,
+    result: "28% seasonal uplift",
+    timeframe: "Peak season",
   },
 ];
 
@@ -69,58 +104,147 @@ const testimonialChunks = chunkArray(
   Math.ceil(testimonials.length / 3)
 );
 
+const StarRating = ({ rating }: { rating: number }) => {
+  return (
+    <div className="flex items-center gap-0.5">
+      {[...Array(5)].map((_, i) => (
+        <Star
+          key={i}
+          className={`h-3.5 w-3.5 ${
+            i < rating
+              ? "fill-amber-400 text-amber-400"
+              : "fill-slate-200 text-slate-200 dark:fill-slate-700 dark:text-slate-700"
+          }`}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function WallOfLoveSection() {
   return (
-    <section>
-      <div className="py-16 md:py-32">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center">
-            <h2 className="text-title text-3xl font-semibold">
-              Loved by E‑Commerce Founders
+    <section className="relative">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 to-white dark:from-slate-900/50 dark:to-slate-950" />
+
+      <div className="relative py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
+              Trusted by{" "}
+              <span className="font-medium text-slate-700 dark:text-slate-300">
+                Forward-Thinking
+              </span>{" "}
+              Brands
             </h2>
-            <p className="text-body mt-6">
-              Hear how Shopify brand owners use Fluxprice AI to boost revenue,
-              save time, and stay ahead of competitors with AI-driven pricing.
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
+              See how e-commerce leaders use intelligent pricing to drive
+              sustainable growth
             </p>
           </div>
-          <div className="mt-8 grid gap-3 [--color-card:var(--color-muted)] sm:grid-cols-2 md:mt-12 lg:grid-cols-3 dark:[--color-muted:var(--color-zinc-900)]">
+
+          {/* Testimonials Grid */}
+          <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2">
             {testimonialChunks.map((chunk, chunkIndex) => (
-              <div
-                key={chunkIndex}
-                className="space-y-3 *:border-none *:shadow-none"
-              >
-                {chunk.map(({ name, role, quote, image }, index) => (
-                  <Card key={index}>
-                    <CardContent className="grid grid-cols-[auto_1fr] gap-3 pt-6">
-                      <Avatar className="size-9">
-                        <AvatarImage
-                          alt={name}
-                          src={image}
-                          loading="lazy"
-                          width="120"
-                          height="120"
-                        />
-                        <AvatarFallback>ST</AvatarFallback>
-                      </Avatar>
-
-                      <div>
-                        <h3 className="font-medium">{name}</h3>
-
-                        <span className="text-muted-foreground block text-sm tracking-wide">
-                          {role}
-                        </span>
-
-                        <blockquote className="mt-3">
-                          <p className="text-gray-700 dark:text-gray-300">
-                            {quote}
+              <div key={chunkIndex} className="space-y-8">
+                {chunk.map(
+                  (
+                    {
+                      name,
+                      role,
+                      company,
+                      quote,
+                      image,
+                      rating,
+                      result,
+                      timeframe,
+                    },
+                    index
+                  ) => (
+                    <Card
+                      key={index}
+                      className="group relative overflow-hidden border border-slate-200/60 hover:border-slate-300/80 transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/20 bg-white/70 backdrop-blur-sm dark:bg-slate-900/70 dark:border-slate-800/60 dark:hover:border-slate-700/80 dark:hover:shadow-slate-900/20"
+                    >
+                      <CardContent className="p-8">
+                        {/* Quote */}
+                        <blockquote className="mb-8">
+                          <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg font-light">
+                            "{quote}"
                           </p>
                         </blockquote>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+
+                        {/* Result */}
+                        <div className="mb-6 p-4 rounded-lg bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                                {result}
+                              </p>
+                              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                {timeframe}
+                              </p>
+                            </div>
+                            <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                          </div>
+                        </div>
+
+                        {/* Author */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <Avatar className="h-12 w-12 ring-1 ring-slate-200 dark:ring-slate-700">
+                              <AvatarImage
+                                alt={name}
+                                src={image}
+                                loading="lazy"
+                                width="120"
+                                height="120"
+                              />
+                              <AvatarFallback className="bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 font-medium">
+                                {name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <h3 className="font-medium text-slate-900 dark:text-slate-100">
+                                {name}
+                              </h3>
+                              <p className="text-sm text-slate-600 dark:text-slate-400">
+                                {role}
+                              </p>
+                              <p className="text-xs font-medium text-slate-500 dark:text-slate-500">
+                                {company}
+                              </p>
+                            </div>
+                          </div>
+                          <StarRating rating={rating} />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )
+                )}
               </div>
             ))}
+          </div>
+
+          {/* Bottom section */}
+          <div className="text-center mt-20 pt-12 border-t border-slate-200/60 dark:border-slate-800/60">
+            <div className="flex items-center justify-center gap-12 text-sm text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                <span className="font-light">Enterprise-grade security</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <StarRating rating={5} />
+                <span className="ml-2 font-light">4.9 average rating</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <span className="font-light">SOC 2 Type II certified</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
