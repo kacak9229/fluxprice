@@ -31,7 +31,7 @@ export default function Home() {
       <StatsSection />
 
       {/* 6. Deep Feature Explanations */}
-      <Features />
+      {/* <Features /> */}
       <FeaturesSection8 />
 
       {/* 7. Integrations (platform compatibility) */}

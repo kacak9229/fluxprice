@@ -1,10 +1,119 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, TrendingUp, Target } from "lucide-react";
 import CompetitorDashboard from "./competitor-dashboard";
 import ShopperRecoveryDashboard from "./shopper-recovery-dashboard";
+
+// Animated Demand Pricing Component
+function DemandPricingAnimation() {
+  const [isHighDemand, setIsHighDemand] = useState(true);
+  const [percentage, setPercentage] = useState(12);
+  const [barWidth, setBarWidth] = useState(75);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+
+      if (isHighDemand) {
+        // Transition to low demand
+        setIsHighDemand(false);
+        animateValues(12, -8, 75, 30);
+      } else {
+        // Transition to high demand
+        setIsHighDemand(true);
+        animateValues(-8, 12, 30, 75);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isHighDemand]);
+
+  const animateValues = (
+    startPerc: number,
+    endPerc: number,
+    startWidth: number,
+    endWidth: number
+  ) => {
+    const duration = 1300; // 1.3 seconds
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Cubic bezier easing (0.4, 0, 0.2, 1)
+      const easeProgress =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      const currentPerc = startPerc + (endPerc - startPerc) * easeProgress;
+      const currentWidth = startWidth + (endWidth - startWidth) * easeProgress;
+
+      setPercentage(Math.round(currentPerc));
+      setBarWidth(currentWidth);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setIsAnimating(false);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-8 text-center border border-gray-200">
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-medium text-gray-700">
+            {isHighDemand ? "High Demand Period" : "Low Demand Period"}
+          </span>
+          <span
+            className={`font-bold transition-all duration-300 ${
+              isHighDemand ? "text-blue-600" : "text-gray-700"
+            }`}
+            style={{
+              filter: isAnimating
+                ? isHighDemand
+                  ? "drop-shadow(0 0 8px rgba(59, 130, 246, 0.3))"
+                  : "drop-shadow(0 0 8px rgba(249, 115, 22, 0.3))"
+                : "none",
+              transition: "filter 0.3s ease-in-out",
+            }}
+          >
+            {percentage > 0 ? "+" : ""}
+            {percentage}% Price
+          </span>
+        </div>
+        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all duration-1300 ease-in-out ${
+              isHighDemand
+                ? "bg-gradient-to-r from-gray-400 to-blue-500"
+                : "bg-gradient-to-r from-gray-400 to-orange-500"
+            }`}
+            style={{
+              width: `${barWidth}%`,
+              filter: isAnimating
+                ? isHighDemand
+                  ? "drop-shadow(0 0 6px rgba(59, 130, 246, 0.2))"
+                  : "drop-shadow(0 0 6px rgba(249, 115, 22, 0.2))"
+                : "none",
+              transition: "filter 0.3s ease-in-out",
+            }}
+          />
+        </div>
+        <div className="text-xs text-gray-500">Margins Protected</div>
+      </div>
+    </div>
+  );
+}
 
 export default function CoreFeatures() {
   const scrollToCTA = () => {
@@ -21,7 +130,7 @@ export default function CoreFeatures() {
     <section className="py-20 md:py-32 bg-gradient-to-b from-background to-gray-50">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
-        <div className="text-center mb-20">
+        {/* <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
             Three Ways Fluxprice AI
             <span className="block text-blue-600">Transforms Your Revenue</span>
@@ -31,30 +140,20 @@ export default function CoreFeatures() {
             prices—it intelligently optimizes every aspect of your pricing
             strategy to maximize profits while protecting your margins.
           </p>
-        </div>
+        </div> */}
 
         {/* Feature 1: Competitor Price Matching */}
         <div className="mb-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center border border-gray-200">
-                  <Shield className="w-6 h-6 text-gray-700" />
-                </div>
-                <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                  Smart Protection
-                </span>
-              </div>
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
-                Match competitor prices without sacrificing profit
+                Match competitor prices without sacrificing profits
               </h3>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Our AI monitors competitors 24/7 and adjusts your prices
-                automatically—while keeping your margins safe with intelligent
-                guardrails. Get 92% price match coverage with 15% margin
-                protection guaranteed.
+                Our AI monitors competitors and adjusts prices
+                automatically—while keeping your margins safe.
               </p>
-              <div className="space-y-4 mb-8">
+              {/* <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                   <span className="text-gray-600">
@@ -73,15 +172,15 @@ export default function CoreFeatures() {
                     Margin guardrails enforced
                   </span>
                 </div>
-              </div>
-              <Button
+              </div> */}
+              {/* <Button
                 size="lg"
                 className="group bg-gray-900 hover:bg-gray-800 text-white"
                 onClick={scrollToCTA}
               >
                 Secure Early Access
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              </Button> */}
             </div>
             <div className="order-1 lg:order-2">
               <div className="relative">
@@ -106,50 +205,14 @@ export default function CoreFeatures() {
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center border border-gray-200">
-                  <Target className="w-6 h-6 text-gray-700" />
-                </div>
-                <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                  Smart Recovery
-                </span>
-              </div>
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
                 Stop losing high-value shoppers, convert them with targeted
                 pricing
               </h3>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Identify at-risk, high-LTV customers in real-time and deliver
-                margin-safe, targeted discounts before they leave. Recover
-                12,480 customers daily while reducing abandonment by 18% and
-                increasing AOV by 9%.
+                Spot at-risk, high-value shoppers in real time—and deliver
+                margin-safe, targeted discounts before they leave.
               </p>
-              <div className="grid grid-cols-2 gap-6 mb-8">
-                <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
-                  <div className="text-2xl font-bold text-gray-900">12,480</div>
-                  <div className="text-sm text-gray-600">Daily Recoveries</div>
-                </div>
-                <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
-                  <div className="text-2xl font-bold text-gray-900">-18%</div>
-                  <div className="text-sm text-gray-600">Abandonment</div>
-                </div>
-                <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
-                  <div className="text-2xl font-bold text-blue-600">+9%</div>
-                  <div className="text-sm text-gray-600">AOV Increase</div>
-                </div>
-                <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
-                  <div className="text-2xl font-bold text-gray-900">86%</div>
-                  <div className="text-sm text-gray-600">Churn Risk</div>
-                </div>
-              </div>
-              <Button
-                size="lg"
-                className="group bg-gray-900 hover:bg-gray-800 text-white"
-                onClick={scrollToCTA}
-              >
-                Secure Early Access
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
             </div>
           </div>
         </div>
@@ -158,14 +221,6 @@ export default function CoreFeatures() {
         <div className="mb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center border border-gray-200">
-                  <TrendingUp className="w-6 h-6 text-gray-700" />
-                </div>
-                <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                  Dynamic Intelligence
-                </span>
-              </div>
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
                 Charge more when demand is high, sell more when it's low
               </h3>
@@ -207,14 +262,6 @@ export default function CoreFeatures() {
                   <span>Real-time sell-through analysis</span>
                 </div>
               </div>
-              <Button
-                size="lg"
-                className="group bg-gray-900 hover:bg-gray-800 text-white"
-                onClick={scrollToCTA}
-              >
-                Secure Early Access
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
             </div>
             <div className="order-1 lg:order-2">
               <div className="relative">
@@ -222,38 +269,10 @@ export default function CoreFeatures() {
                 <div className="relative bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
                   <div className="mb-4">
                     <h4 className="font-semibold text-gray-900 mb-2">
-                      Demand-Based Pricing Dashboard
+                      Demand-Based Price Adjustments
                     </h4>
-                    <p className="text-sm text-gray-600">
-                      Real-time optimization in action
-                    </p>
                   </div>
-                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-8 text-center border border-gray-200">
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700">
-                          High Demand Period
-                        </span>
-                        <span className="text-blue-600 font-bold">
-                          +12% Price
-                        </span>
-                      </div>
-                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-gray-400 to-blue-500 w-3/4 rounded-full"></div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700">
-                          Low Demand Period
-                        </span>
-                        <span className="text-gray-700 font-bold">
-                          -8% Price
-                        </span>
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        Margin Safe • Auto-Adjust ON
-                      </div>
-                    </div>
-                  </div>
+                  <DemandPricingAnimation />
                 </div>
               </div>
             </div>

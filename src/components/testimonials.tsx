@@ -1,5 +1,8 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Star,
   TrendingUp,
@@ -28,7 +31,7 @@ const testimonials: Testimonial[] = [
     quote:
       "The pricing intelligence has been transformative. We're making data-driven decisions instead of guessing, and our margins reflect that confidence.",
     rating: 5,
-    result: "18% revenue increase",
+    result: "18% revenue increase within 3 months",
     timeframe: "First quarter",
   },
   {
@@ -39,7 +42,7 @@ const testimonials: Testimonial[] = [
     quote:
       "What impressed me most was how quickly we could implement sophisticated pricing strategies. The learning curve was minimal, the impact immediate.",
     rating: 5,
-    result: "12% margin improvement",
+    result: "12% margin improvement within 6 weeks",
     timeframe: "Within 6 weeks",
   },
   {
@@ -50,7 +53,7 @@ const testimonials: Testimonial[] = [
     quote:
       "The market insights help us understand not just what to price, but when to adjust. It's like having a seasoned analyst on the team.",
     rating: 5,
-    result: "24% conversion lift",
+    result: "24% conversion increase within 3 months",
     timeframe: "Over 3 months",
   },
   {
@@ -61,7 +64,7 @@ const testimonials: Testimonial[] = [
     quote:
       "In our competitive space, pricing precision matters. This platform gives us the confidence to compete strategically rather than reactively.",
     rating: 5,
-    result: "22% profit growth",
+    result: "22% profit increase within 3 months",
     timeframe: "Last quarter",
   },
   {
@@ -72,7 +75,7 @@ const testimonials: Testimonial[] = [
     quote:
       "As a smaller operation, we needed enterprise-level pricing intelligence without the complexity. This delivers exactly that balance.",
     rating: 5,
-    result: "14% revenue growth",
+    result: "14% revenue increase within 4 months",
     timeframe: "Past 4 months",
   },
   {
@@ -83,7 +86,7 @@ const testimonials: Testimonial[] = [
     quote:
       "The seasonal pricing optimization has been remarkable. We're capturing demand peaks more effectively while maintaining healthy margins year-round.",
     rating: 5,
-    result: "28% seasonal uplift",
+    result: "28% revenue increase during peak season",
     timeframe: "Peak season",
   },
 ];
@@ -119,6 +122,16 @@ const StarRating = ({ rating }: { rating: number }) => {
       ))}
     </div>
   );
+};
+
+const scrollToCTA = () => {
+  const ctaElement = document.getElementById("cta");
+  if (ctaElement) {
+    ctaElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
 };
 
 export default function WallOfLoveSection() {
@@ -244,6 +257,27 @@ export default function WallOfLoveSection() {
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 <span className="font-light">SOC 2 Type II certified</span>
               </div>
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-2xl p-12 border border-gray-200 mt-20">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+              Ready to Transform Your Pricing Strategy?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              Join thousands of Shopify stores already using Fluxprice AI to
+              maximize revenue while protecting margins. See results in your
+              first week.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="px-8 bg-gray-900 hover:bg-gray-800 text-white"
+                onClick={scrollToCTA}
+              >
+                Secure Early Access
+              </Button>
             </div>
           </div>
         </div>

@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 
 const menuItems = [
   { name: "Features", href: "#link" },
@@ -16,11 +17,18 @@ const menuItems = [
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [showCTA, setShowCTA] = React.useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 50);
+
+      // Show CTA when user has scrolled past the Hero section (approximately 80vh)
+      const heroHeight = window.innerHeight * 0.8;
+      setShowCTA(scrollY > heroHeight);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -47,14 +55,29 @@ export const HeroHeader = () => {
                 <Logo />
               </Link>
 
-              <button
-                onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
-              >
-                <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
-              </button>
+              {showCTA && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      document.getElementById("cta")?.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                    }}
+                    className="lg:hidden px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap h-10 flex items-center justify-center"
+                  >
+                    <span className="hidden xs:inline sm:inline">
+                      Secure Early Access
+                    </span>
+                    <span className="xs:hidden sm:hidden">Get Access</span>
+                    <ArrowRight className="ml-1 size-3 sm:size-4" />
+                  </Button>
+                </motion.div>
+              )}
             </div>
 
             {/* <div className="absolute inset-0 m-auto hidden size-fit lg:block">
@@ -88,32 +111,26 @@ export const HeroHeader = () => {
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                {/* <Button
-                                    asChild
-                                    variant="outline"
-                                    size="sm"
-                                    className={cn(isScrolled && 'lg:hidden')}>
-                                    <Link href="#">
-                                        <span>Login</span>
-                                    </Link>
-                                </Button>
-                                <Button
-                                    asChild
-                                    size="sm"
-                                    className={cn(isScrolled && 'lg:hidden')}>
-                                    <Link href="#">
-                                        <span>Sign Up</span>
-                                    </Link>
-                                </Button> */}
-                {/* <Button
-                  asChild
-                  size="sm"
-                  className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
-                >
-                  <Link href="#">
-                    <span>Get Started</span>
-                  </Link>
-                </Button> */}
+                {showCTA && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        document.getElementById("cta")?.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="hidden lg:inline-flex px-4 py-2 h-10 items-center justify-center"
+                    >
+                      Secure Early Access
+                      <ArrowRight className="ml-1 size-4" />
+                    </Button>
+                  </motion.div>
+                )}
               </div>
             </div>
           </div>

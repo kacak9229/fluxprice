@@ -12,63 +12,39 @@ export default function FAQsTwo() {
   const faqItems = [
     {
       id: "item-1",
-      question: "What is Fluxprice AI?",
+      question: "Will this hurt my margins?",
       answer:
-        "Fluxprice AI is an AI-powered platform that automates price monitoring, competitor tracking, and market analytics to help businesses optimize their pricing strategies in real time.",
+        "No. You set a Minimum Margin (e.g., 15%) plus optional minimum/maximum bounds per SKU/collection, and the system will never publish a price below your minimum margin. It also honors exclusions (new arrivals, clearance) and prevents discounts below your minimum margin.",
     },
     {
       id: "item-2",
-      question: "Who is Fluxprice AI for?",
+      question: "How do personalized discounts not destroy margin?",
       answer:
-        "Fluxprice AI is designed for e-commerce brands, SaaS companies, and marketplaces that want to stay competitive, track market trends, and maximize revenue with dynamic pricing insights.",
+        "Discounts are margin-aware: they trigger only for at-risk, high-value shoppers (signals like cart idle, exit intent, checkout delay) and always respect your minimum margin and per-SKU maximum discount limits.",
     },
     {
       id: "item-3",
-      question: "How does Fluxprice AI track competitor prices?",
+      question: "Do I stay in control?",
       answer:
-        "Our platform uses AI-driven web crawlers and APIs to monitor competitor prices across multiple channels. We provide real-time updates and automated alerts when changes occur.",
+        "Yes. You control everything:\n• Auto-apply per SKU/collection, or require manual approval.\n• Set minimum/maximum prices, schedule changes, and exclude certain brands/collections.\n• Preview price changes before publishing them.\n• One-click rollback for any change.",
     },
     {
       id: "item-4",
-      question: "Do I need coding skills to use Fluxprice AI?",
+      question: "How does it decide prices, and how fast does it react?",
       answer:
-        "Not at all. Fluxprice AI offers an intuitive dashboard that requires no coding knowledge. For advanced users, we also provide API access for custom integrations.",
+        'Pricing evaluates competitor prices, demand signals (traffic, add-to-cart, checkout hesitation, and more), inventory, and seasonality. Updates run automatically and can be throttled (from minutes to hourly). Activity metrics (e.g., "127 competitor price updates in the last hour") show freshness.',
     },
     {
       id: "item-5",
-      question: "What integrations does Fluxprice AI support?",
+      question: "What results should I expect, and how do you prove it?",
       answer:
-        "Fluxprice AI integrates seamlessly with platforms like Shopify, WooCommerce, BigCommerce, and various ERP/CRM systems. Custom API integrations are also available.",
+        "We've seen revenue increase up to 30% for our customers, but results vary by catalog and competition. Measure revenue lift, conversion rate, and order margin over a 2–4 week A/B test or geo/audience split, and review median/percentile outcomes.",
     },
     {
       id: "item-6",
-      question: "How often are prices updated?",
-      answer:
-        "Prices are updated in near real-time, with customizable refresh intervals depending on your plan. Enterprise users can request higher-frequency tracking.",
-    },
-    {
-      id: "item-7",
       question: "Is my data secure?",
       answer:
-        "Yes, we prioritize security. Fluxprice AI uses encrypted connections (SSL/TLS) and complies with GDPR and industry best practices to protect your business data.",
-    },
-    {
-      id: "item-8",
-      question: "What pricing plans are available?",
-      answer:
-        "Fluxprice AI offers flexible plans based on your needs—from startups to enterprise-scale businesses. Visit our pricing page to see the full breakdown.",
-    },
-    {
-      id: "item-9",
-      question: "Can I try Fluxprice AI for free?",
-      answer:
-        "Yes, we offer a 14-day free trial with full access to core features. No credit card required to get started.",
-    },
-    {
-      id: "item-10",
-      question: "How do I get support?",
-      answer:
-        "You can reach our support team via live chat, email, or our help center. Enterprise customers also get a dedicated account manager and priority support.",
+        "Yes. FluxPrice runs inside Shopify's trusted ecosystem, with full encryption and safeguards to protect your store, your data, and your customers.",
     },
   ];
 
@@ -101,7 +77,9 @@ export default function FAQsTwo() {
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-base">{item.answer}</p>
+                  <div className="text-base whitespace-pre-line">
+                    {item.answer}
+                  </div>
                 </AccordionContent>
               </AccordionItem>
             ))}

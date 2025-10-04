@@ -8,7 +8,7 @@ import Image from "next/image";
 import { TextEffect } from "@/components/ui/text-effect";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { HeroHeader } from "./header";
-import { Variants } from "motion/react";
+import { Variants, motion } from "motion/react";
 
 const itemVariants: Variants = {
   hidden: {
@@ -46,6 +46,45 @@ const transitionVariants = {
       },
     },
   },
+};
+
+// Custom animated text with bold styling
+const AnimatedTextWithBold = () => {
+  const text =
+    "Real-time intelligent pricing that matches competitor prices and converts high-value customers before they leave while protecting your margins.";
+  const words = text.split(/(\s+)/);
+
+  // Define which words should be bold
+  const boldRanges = [
+    { start: 16, end: 20 }, // "converts high-value customers"
+    { start: 30, end: 36 }, // "protecting your margins"
+  ];
+
+  const isBold = (index: number) => {
+    return boldRanges.some(
+      (range) => index >= range.start && index <= range.end
+    );
+  };
+
+  return (
+    <motion.p
+      className="mx-auto mt-8 max-w-2xl text-balance text-lg"
+      initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      transition={{ duration: 0.8, delay: 0.5 }}
+    >
+      {words.map((word, index) => (
+        <span
+          key={index}
+          className={`inline-block whitespace-pre ${
+            isBold(index) ? "font-bold" : ""
+          }`}
+        >
+          {word}
+        </span>
+      ))}
+    </motion.p>
+  );
 };
 
 export default function HeroSection() {
@@ -101,7 +140,7 @@ export default function HeroSection() {
             <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div>
             <div className="mx-auto max-w-7xl px-6">
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
-                <AnimatedGroup variants={{ item: itemVariants }}>
+                {/* <AnimatedGroup variants={{ item: itemVariants }}>
                   <Link
                     href="#link"
                     className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
@@ -122,7 +161,7 @@ export default function HeroSection() {
                       </div>
                     </div>
                   </Link>
-                </AnimatedGroup>
+                </AnimatedGroup> */}
 
                 <TextEffect
                   preset="fade-in-blur"
@@ -130,21 +169,9 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 text-balance text-5xl md:text-5xl lg:mt-16 xl:text-[4.25rem]"
                 >
-                  Fluxprice AI: Boost Shopify Sales Up to 30% with Profit-Safe
-                  Dynamic Pricing
+                  Boost Shopify Sales Up to 30% with Profit-Safe Dynamic Pricing
                 </TextEffect>
-                <TextEffect
-                  per="line"
-                  preset="fade-in-blur"
-                  speedSegment={0.3}
-                  delay={0.5}
-                  as="p"
-                  className="mx-auto mt-8 max-w-2xl text-balance text-lg"
-                >
-                  Real-time intelligent pricing that matches competitor prices
-                  and converts high-value customers before they leave while
-                  protecting your margins.
-                </TextEffect>
+                <AnimatedTextWithBold />
 
                 <AnimatedGroup
                   variants={{

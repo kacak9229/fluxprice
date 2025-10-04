@@ -20,8 +20,11 @@ export default function PricingSection() {
       <div className="mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+            🎉 Early Bird Discount - Limited Time
+          </div>
           <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 mb-4">
-            Ready to Elevate Your Shopify Store’s Profitability?
+            Ready to Elevate Your Shopify Store's Profitability?
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Start free, then pay as you grow. No hidden fees, no surprises.
@@ -55,8 +58,13 @@ export default function PricingSection() {
                   <p className="text-gray-600">Up to 1,000 orders/month</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-semibold text-gray-900">
-                    $49
+                  <div className="flex items-center justify-end gap-2 mb-1">
+                    <div className="text-4xl font-semibold text-gray-900">
+                      $49
+                    </div>
+                    <div className="text-2xl text-gray-400 line-through">
+                      $59
+                    </div>
                   </div>
                   <div className="text-gray-600">/month</div>
                 </div>
@@ -107,8 +115,13 @@ export default function PricingSection() {
                   <p className="text-gray-600">Unlimited orders</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-semibold text-gray-900">
-                    $99
+                  <div className="flex items-center justify-end gap-2 mb-1">
+                    <div className="text-4xl font-semibold text-gray-900">
+                      $99
+                    </div>
+                    <div className="text-2xl text-gray-400 line-through">
+                      $109
+                    </div>
                   </div>
                   <div className="text-gray-600">/month</div>
                 </div>
@@ -144,31 +157,6 @@ export default function PricingSection() {
         </div>
 
         {/* Social Proof */}
-        <div className="text-center mb-12">
-          <h3 className="text-2xl font-medium text-gray-900 mb-8">
-            Trusted by growing merchants
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-light text-gray-900 mb-1">30%</div>
-              <div className="text-gray-600 text-sm">Average revenue boost</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-light text-gray-900 mb-1">5K+</div>
-              <div className="text-gray-600 text-sm">Active stores</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-light text-gray-900 mb-1">24/7</div>
-              <div className="text-gray-600 text-sm">Always working</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-light text-gray-900 mb-1">
-                99.9%
-              </div>
-              <div className="text-gray-600 text-sm">Uptime</div>
-            </div>
-          </div>
-        </div>
 
         {/* FAQ */}
         <div className="max-w-3xl mx-auto mb-12">
