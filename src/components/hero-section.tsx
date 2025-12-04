@@ -190,13 +190,13 @@ export default function HeroSection() {
                   <Button
                     size="lg"
                     onClick={() => {
-                      document.getElementById("cta")?.scrollIntoView({
+                      document.getElementById("pricing")?.scrollIntoView({
                         behavior: "smooth",
                       });
                     }}
                     className="px-8 py-4 text-lg"
                   >
-                    Secure Early Access
+                    Join the Waitlist
                     <ArrowRight className="ml-2 size-5" />
                   </Button>
                 </AnimatedGroup>

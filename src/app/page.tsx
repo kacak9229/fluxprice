@@ -19,7 +19,7 @@ export default function Home() {
       <HeroSection />
 
       {/* 2. Social Proof (Logos for instant trust) */}
-      <LogoCloud />
+      {/* <LogoCloud /> */}
 
       {/* 3. Primary Features Overview */}
       {/* <FeaturesSection /> */}
@@ -40,11 +40,11 @@ export default function Home() {
       {/* 8. Testimonials (real-world trust) */}
       <TestimonialSection />
 
-      {/* 9. FAQs to handle objections */}
-      <FAQsTwo />
-
       {/* 10. Pricing to show value */}
       <PricingSection />
+
+       {/* 9. FAQs to handle objections */}
+       <FAQsTwo />
 
       {/* 11. Final CTA to convert */}
       <CTA />

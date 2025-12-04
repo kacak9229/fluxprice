@@ -64,16 +64,13 @@ export const HeroHeader = () => {
                   <Button
                     size="sm"
                     onClick={() => {
-                      document.getElementById("cta")?.scrollIntoView({
+                      document.getElementById("pricing")?.scrollIntoView({
                         behavior: "smooth",
                       });
                     }}
-                    className="lg:hidden px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm whitespace-nowrap h-10 flex items-center justify-center"
+                    className="lg:hidden px-5 py-2.5 text-sm whitespace-nowrap h-11 flex items-center justify-center font-medium"
                   >
-                    <span className="hidden xs:inline sm:inline">
-                      Secure Early Access
-                    </span>
-                    <span className="xs:hidden sm:hidden">Get Access</span>
+                    <span>Join the Waitlist</span>
                   </Button>
                 </motion.div>
               )}
@@ -125,7 +122,7 @@ export const HeroHeader = () => {
                       }}
                       className="hidden lg:inline-flex px-4 py-2 h-10 items-center justify-center"
                     >
-                      Secure Early Access
+                      Join the Waitlist
                       <ArrowRight className="ml-1 size-4" />
                     </Button>
                   </motion.div>

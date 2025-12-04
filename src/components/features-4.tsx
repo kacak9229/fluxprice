@@ -14,9 +14,9 @@ import { Button } from "@/components/ui/button";
 
 export default function Features() {
   const scrollToCTA = () => {
-    const ctaElement = document.getElementById("cta");
-    if (ctaElement) {
-      ctaElement.scrollIntoView({
+    const pricingElement = document.getElementById("pricing");
+    if (pricingElement) {
+      pricingElement.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
@@ -296,7 +296,7 @@ export default function Features() {
                   onClick={scrollToCTA}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  Secure Early Access
+                  Join the Waitlist
                 </Button>
               </div>
             </div>

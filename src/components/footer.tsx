@@ -1,16 +1,28 @@
+"use client";
+
 import { Logo } from "@/components/logo";
 import Link from "next/link";
 
 const links = [
-  { title: "Features", href: "#" },
-  { title: "How It Works", href: "#" },
-  { title: "Customers", href: "#" },
-  { title: "Pricing", href: "#" },
-  { title: "FAQ", href: "#" },
-  { title: "Contact", href: "#" },
+  { title: "Features", href: "#features" },
+  { title: "Reviews", href: "#reviews" },
+  { title: "Pricing", href: "#pricing" },
+  { title: "FAQ", href: "#faq" },
 ];
 
 export default function FooterSection() {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const id = href.replace("#", "");
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <footer className="bg-muted py-16">
       <div className="mx-auto max-w-5xl px-6">
@@ -24,17 +36,18 @@ export default function FooterSection() {
 
         <div className="my-8 flex flex-wrap justify-center gap-6">
           {links.map((link, index) => (
-            <Link
+            <a
               key={index}
               href={link.href}
-              className="text-muted-foreground hover:text-primary block duration-150"
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className="text-muted-foreground hover:text-primary block duration-150 cursor-pointer"
             >
               <span>{link.title}</span>
-            </Link>
+            </a>
           ))}
         </div>
 
-        <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
+        {/* <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
           {[
             { label: "X/Twitter", href: "#", icon: "twitter" },
             { label: "LinkedIn", href: "#", icon: "linkedin" },
@@ -57,7 +70,7 @@ export default function FooterSection() {
               />
             </Link>
           ))}
-        </div>
+        </div> */}
 
         <span className="text-muted-foreground block text-center text-sm">
           © {new Date().getFullYear()} Fluxprice AI, All rights reserved.

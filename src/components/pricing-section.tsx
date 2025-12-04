@@ -1,22 +1,25 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Check, Star } from "lucide-react";
+import WaitlistModal from "./waitlist-modal";
 
 export default function PricingSection() {
-  const scrollToCTA = () => {
-    const ctaElement = document.getElementById("cta");
-    if (ctaElement) {
-      ctaElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{
+    name: string;
+    price: string;
+  } | null>(null);
+
+  const handleJoinWaitlist = (planName: string, planPrice: string) => {
+    setSelectedPlan({ name: planName, price: planPrice });
+    setIsModalOpen(true);
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section id="pricing" className="py-16 md:py-24 bg-white">
       <div className="mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="text-center mb-16">
@@ -93,9 +96,9 @@ export default function PricingSection() {
               </div>
               <Button
                 className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-lg"
-                onClick={scrollToCTA}
+                onClick={() => handleJoinWaitlist("Core", "$49/month")}
               >
-                Secure Early Access
+                Join the Waitlist
               </Button>
             </CardContent>
           </Card>
@@ -148,52 +151,23 @@ export default function PricingSection() {
               </div>
               <Button
                 className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-lg"
-                onClick={scrollToCTA}
+                onClick={() => handleJoinWaitlist("Pro", "$99/month")}
               >
-                Secure Early Access
+                Join the Waitlist
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Social Proof */}
+        <WaitlistModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          planName={selectedPlan?.name}
+          planPrice={selectedPlan?.price}
+        />
 
-        {/* FAQ */}
-        <div className="max-w-3xl mx-auto mb-12">
-          <h3 className="text-2xl font-medium text-gray-900 mb-8 text-center">
-            Frequently asked questions
-          </h3>
-          <div className="space-y-6">
-            <div className="border-b border-gray-200 pb-6">
-              <h4 className="text-lg font-medium text-gray-900 mb-3">
-                How does the free trial work?
-              </h4>
-              <p className="text-gray-600 leading-relaxed">
-                Start with a 14-day free trial. No credit card required. Cancel
-                anytime during the trial period with no charges.
-              </p>
-            </div>
-            <div className="border-b border-gray-200 pb-6">
-              <h4 className="text-lg font-medium text-gray-900 mb-3">
-                Can I change plans later?
-              </h4>
-              <p className="text-gray-600 leading-relaxed">
-                Yes, you can upgrade or downgrade your plan at any time. Changes
-                take effect immediately with prorated billing.
-              </p>
-            </div>
-            <div className="border-b border-gray-200 pb-6">
-              <h4 className="text-lg font-medium text-gray-900 mb-3">
-                What happens if I exceed my order limit?
-              </h4>
-              <p className="text-gray-600 leading-relaxed">
-                For Core plan users, we'll notify you before you reach your
-                limit. You can upgrade to Pro for unlimited orders or pay a
-                small overage fee.
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* Social Proof */}
+     
 
         {/* Bottom CTA */}
       </div>

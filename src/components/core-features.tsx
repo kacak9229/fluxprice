@@ -117,9 +117,9 @@ function DemandPricingAnimation() {
 
 export default function CoreFeatures() {
   const scrollToCTA = () => {
-    const ctaElement = document.getElementById("cta");
-    if (ctaElement) {
-      ctaElement.scrollIntoView({
+    const pricingElement = document.getElementById("pricing");
+    if (pricingElement) {
+      pricingElement.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
@@ -145,7 +145,7 @@ export default function CoreFeatures() {
         {/* Feature 1: Competitor Price Matching */}
         <div className="mb-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+            <div className="lg:order-1">
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
                 Match competitor prices without sacrificing profits
               </h3>
@@ -153,36 +153,8 @@ export default function CoreFeatures() {
                 Our AI monitors competitors and adjusts prices
                 automatically—while keeping your margins safe.
               </p>
-              {/* <div className="space-y-4 mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                  <span className="text-gray-600">
-                    Real-time competitor monitoring
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                  <span className="text-gray-600">
-                    Automatic price adjustments
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                  <span className="text-gray-600">
-                    Margin guardrails enforced
-                  </span>
-                </div>
-              </div> */}
-              {/* <Button
-                size="lg"
-                className="group bg-gray-900 hover:bg-gray-800 text-white"
-                onClick={scrollToCTA}
-              >
-                Secure Early Access
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button> */}
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="lg:order-2">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-200/50 to-gray-300/50 rounded-2xl blur-3xl"></div>
                 <div className="relative">
@@ -196,7 +168,7 @@ export default function CoreFeatures() {
         {/* Feature 2: High-Value Shopper Recovery */}
         <div className="mb-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="order-2 lg:order-1">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-200/50 to-gray-300/50 rounded-2xl blur-3xl"></div>
                 <div className="relative">
@@ -204,7 +176,7 @@ export default function CoreFeatures() {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="order-1 lg:order-2">
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
                 Stop losing high-value shoppers, convert them with targeted
                 pricing
@@ -220,15 +192,12 @@ export default function CoreFeatures() {
         {/* Feature 3: Dynamic Demand Pricing */}
         <div className="mb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+            <div className="lg:order-1">
               <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
                 Charge more when demand is high, sell more when it's low
               </h3>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Our AI analyzes inventory levels, traffic surges, seasonality,
-                and sell-through rates to optimize pricing in real-time.
-                Increase revenue by 10% and sell-through by 14% with 128
-                intelligent price changes.
+              Profit-safe dynamic pricing adapts to real-time demand helping you earn more when demand spikes and keep sales flowing when demand slows.
               </p>
               <div className="grid grid-cols-3 gap-4 mb-8">
                 <div className="text-center p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
@@ -263,7 +232,7 @@ export default function CoreFeatures() {
                 </div>
               </div>
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="lg:order-2">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-200/50 to-gray-300/50 rounded-2xl blur-3xl"></div>
                 <div className="relative bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
@@ -295,7 +264,7 @@ export default function CoreFeatures() {
               className="px-8 bg-gray-900 hover:bg-gray-800 text-white"
               onClick={scrollToCTA}
             >
-              Secure Early Access
+              Join the Waitlist
             </Button>
           </div>
         </div>

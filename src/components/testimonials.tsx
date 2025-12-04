@@ -1,14 +1,14 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Star,
-  TrendingUp,
-  DollarSign,
-  Clock,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 type Testimonial = {
@@ -91,22 +91,6 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-const chunkArray = (
-  array: Testimonial[],
-  chunkSize: number
-): Testimonial[][] => {
-  const result: Testimonial[][] = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
-  }
-  return result;
-};
-
-const testimonialChunks = chunkArray(
-  testimonials,
-  Math.ceil(testimonials.length / 3)
-);
-
 const StarRating = ({ rating }: { rating: number }) => {
   return (
     <div className="flex items-center gap-0.5">
@@ -125,9 +109,9 @@ const StarRating = ({ rating }: { rating: number }) => {
 };
 
 const scrollToCTA = () => {
-  const ctaElement = document.getElementById("cta");
-  if (ctaElement) {
-    ctaElement.scrollIntoView({
+  const pricingElement = document.getElementById("pricing");
+  if (pricingElement) {
+    pricingElement.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
@@ -135,8 +119,106 @@ const scrollToCTA = () => {
 };
 
 export default function WallOfLoveSection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
+
+  // Determine cards per view based on screen size
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      if (window.innerWidth < 768) {
+        setCardsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(3);
+      }
+    };
+
+    updateCardsPerView();
+    window.addEventListener("resize", updateCardsPerView);
+    return () => window.removeEventListener("resize", updateCardsPerView);
+  }, []);
+
+  const maxIndex = Math.max(0, testimonials.length - cardsPerView);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
+
+  const TestimonialCard = ({
+    name,
+    role,
+    company,
+    quote,
+    image,
+    rating,
+    result,
+    timeframe,
+  }: Testimonial) => (
+    <Card className="group relative overflow-hidden border border-slate-200/60 hover:border-slate-300/80 transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/20 bg-white/70 backdrop-blur-sm dark:bg-slate-900/70 dark:border-slate-800/60 dark:hover:border-slate-700/80 dark:hover:shadow-slate-900/20 h-full">
+      <CardContent className="p-8 flex flex-col h-full">
+        {/* Quote */}
+        <blockquote className="mb-8 flex-grow">
+          <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg font-light">
+            "{quote}"
+          </p>
+        </blockquote>
+
+        {/* Result */}
+        <div className="mb-6 p-4 rounded-lg bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                {result}
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                {timeframe}
+              </p>
+            </div>
+            <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          </div>
+        </div>
+
+        {/* Author */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Avatar className="h-12 w-12 ring-1 ring-slate-200 dark:ring-slate-700">
+              <AvatarImage
+                alt={name}
+                src={image}
+                loading="lazy"
+                width="120"
+                height="120"
+              />
+              <AvatarFallback className="bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 font-medium">
+                {name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h3 className="font-medium text-slate-900 dark:text-slate-100">
+                {name}
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">{role}</p>
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-500">
+                {company}
+              </p>
+            </div>
+          </div>
+          <StarRating rating={rating} />
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
-    <section className="relative">
+    <section id="reviews" className="relative">
       {/* Subtle background */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 to-white dark:from-slate-900/50 dark:to-slate-950" />
 
@@ -157,89 +239,64 @@ export default function WallOfLoveSection() {
             </p>
           </div>
 
-          {/* Testimonials Grid */}
-          <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2">
-            {testimonialChunks.map((chunk, chunkIndex) => (
-              <div key={chunkIndex} className="space-y-8">
-                {chunk.map(
-                  (
-                    {
-                      name,
-                      role,
-                      company,
-                      quote,
-                      image,
-                      rating,
-                      result,
-                      timeframe,
-                    },
-                    index
-                  ) => (
-                    <Card
-                      key={index}
-                      className="group relative overflow-hidden border border-slate-200/60 hover:border-slate-300/80 transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/20 bg-white/70 backdrop-blur-sm dark:bg-slate-900/70 dark:border-slate-800/60 dark:hover:border-slate-700/80 dark:hover:shadow-slate-900/20"
-                    >
-                      <CardContent className="p-8">
-                        {/* Quote */}
-                        <blockquote className="mb-8">
-                          <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg font-light">
-                            "{quote}"
-                          </p>
-                        </blockquote>
+          {/* Testimonials Slider */}
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-200 hidden md:flex"
+              aria-label="Previous testimonials"
+            >
+              <ChevronLeft className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+            </button>
 
-                        {/* Result */}
-                        <div className="mb-6 p-4 rounded-lg bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                {result}
-                              </p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                                {timeframe}
-                              </p>
-                            </div>
-                            <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-                          </div>
-                        </div>
+            <button
+              onClick={handleNext}
+              disabled={currentIndex >= maxIndex}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-200 hidden md:flex"
+              aria-label="Next testimonials"
+            >
+              <ChevronRight className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+            </button>
 
-                        {/* Author */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <Avatar className="h-12 w-12 ring-1 ring-slate-200 dark:ring-slate-700">
-                              <AvatarImage
-                                alt={name}
-                                src={image}
-                                loading="lazy"
-                                width="120"
-                                height="120"
-                              />
-                              <AvatarFallback className="bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 font-medium">
-                                {name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <h3 className="font-medium text-slate-900 dark:text-slate-100">
-                                {name}
-                              </h3>
-                              <p className="text-sm text-slate-600 dark:text-slate-400">
-                                {role}
-                              </p>
-                              <p className="text-xs font-medium text-slate-500 dark:text-slate-500">
-                                {company}
-                              </p>
-                            </div>
-                          </div>
-                          <StarRating rating={rating} />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )
-                )}
+            {/* Slider Container */}
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-out gap-6"
+                style={{
+                  transform: `translateX(-${currentIndex * (100 / cardsPerView + 2)}%)`,
+                }}
+              >
+                {testimonials.map((testimonial, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0"
+                    style={{
+                      width: `calc(${100 / cardsPerView}% - ${(cardsPerView - 1) * 24 / cardsPerView}px)`,
+                    }}
+                  >
+                    <TestimonialCard {...testimonial} />
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? "w-8 bg-slate-700 dark:bg-slate-300"
+                      : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Bottom section */}
@@ -276,7 +333,7 @@ export default function WallOfLoveSection() {
                 className="px-8 bg-gray-900 hover:bg-gray-800 text-white"
                 onClick={scrollToCTA}
               >
-                Secure Early Access
+                Join the Waitlist
               </Button>
             </div>
           </div>
