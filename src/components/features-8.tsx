@@ -15,66 +15,6 @@ export default function FeaturesSection() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="relative">
           <div className="relative z-10 grid grid-cols-6 gap-3">
-            {/* Feature 1 */}
-            <Card className="relative col-span-full flex overflow-hidden lg:col-span-2">
-              <CardContent className="relative m-auto size-fit pt-6">
-                <div className="relative flex h-24 w-56 items-center">
-                  <span className="mx-auto block w-fit text-5xl font-semibold">
-                    30%
-                  </span>
-                </div>
-                <h2 className="mt-6 text-center text-3xl font-semibold">
-                  AI-Powered Revenue Boost
-                </h2>
-                <p className="mt-2 text-center text-muted-foreground">
-                  Stores using Fluxprice AI see an average **30% increase in
-                  revenue** with automated, intelligent pricing.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Feature 2 */}
-            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
-              <CardContent className="pt-6">
-                <div className="relative mx-auto flex aspect-square size-32 rounded-full border">
-                  <Shield
-                    className="m-auto size-12 text-primary"
-                    strokeWidth={1}
-                  />
-                </div>
-                <div className="relative z-10 mt-6 space-y-2 text-center">
-                  <h2 className="text-lg font-medium transition dark:text-white">
-                    Smart Price Automation
-                  </h2>
-                  <p className="text-foreground">
-                    Our AI instantly adjusts prices based on demand,
-                    competition, and buyer intent — all in real time.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Feature 3 */}
-            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
-              <CardContent className="pt-6">
-                <div className="pt-6 lg:px-6">
-                  <Users
-                    className="m-auto size-12 text-primary"
-                    strokeWidth={1}
-                  />
-                </div>
-                <div className="relative z-10 mt-14 space-y-2 text-center">
-                  <h2 className="text-lg font-medium transition">
-                    Competitor Tracking
-                  </h2>
-                  <p className="text-foreground">
-                    Track competitor pricing instantly and react automatically
-                    to stay ahead.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Feature 4 - Seamless Shopify Integration */}
             <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
               <CardContent className="pt-6">

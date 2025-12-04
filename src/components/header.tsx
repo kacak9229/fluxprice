@@ -74,7 +74,6 @@ export const HeroHeader = () => {
                       Secure Early Access
                     </span>
                     <span className="xs:hidden sm:hidden">Get Access</span>
-                    <ArrowRight className="ml-1 size-3 sm:size-4" />
                   </Button>
                 </motion.div>
               )}

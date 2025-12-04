@@ -24,11 +24,11 @@ export default function Home() {
       {/* 3. Primary Features Overview */}
       {/* <FeaturesSection /> */}
 
-      {/* 4. Core Features Deep Dive */}
-      <CoreFeatures />
-
       {/* 5. Stats for credibility */}
       <StatsSection />
+
+      {/* 4. Core Features Deep Dive */}
+      <CoreFeatures />
 
       {/* 6. Deep Feature Explanations */}
       {/* <Features /> */}
