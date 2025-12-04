@@ -6,114 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, TrendingUp, Target } from "lucide-react";
 import CompetitorDashboard from "./competitor-dashboard";
 import ShopperRecoveryDashboard from "./shopper-recovery-dashboard";
-
-// Animated Demand Pricing Component
-function DemandPricingAnimation() {
-  const [isHighDemand, setIsHighDemand] = useState(true);
-  const [percentage, setPercentage] = useState(12);
-  const [barWidth, setBarWidth] = useState(75);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-
-      if (isHighDemand) {
-        // Transition to low demand
-        setIsHighDemand(false);
-        animateValues(12, -8, 75, 30);
-      } else {
-        // Transition to high demand
-        setIsHighDemand(true);
-        animateValues(-8, 12, 30, 75);
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isHighDemand]);
-
-  const animateValues = (
-    startPerc: number,
-    endPerc: number,
-    startWidth: number,
-    endWidth: number
-  ) => {
-    const duration = 1300; // 1.3 seconds
-    const startTime = Date.now();
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Cubic bezier easing (0.4, 0, 0.2, 1)
-      const easeProgress =
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      const currentPerc = startPerc + (endPerc - startPerc) * easeProgress;
-      const currentWidth = startWidth + (endWidth - startWidth) * easeProgress;
-
-      setPercentage(Math.round(currentPerc));
-      setBarWidth(currentWidth);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setIsAnimating(false);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  };
-
-  return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-8 text-center border border-gray-200">
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-gray-700">
-            {isHighDemand ? "High Demand Period" : "Low Demand Period"}
-          </span>
-          <span
-            className={`font-bold transition-all duration-300 ${
-              isHighDemand ? "text-blue-600" : "text-gray-700"
-            }`}
-            style={{
-              filter: isAnimating
-                ? isHighDemand
-                  ? "drop-shadow(0 0 8px rgba(59, 130, 246, 0.3))"
-                  : "drop-shadow(0 0 8px rgba(249, 115, 22, 0.3))"
-                : "none",
-              transition: "filter 0.3s ease-in-out",
-            }}
-          >
-            {percentage > 0 ? "+" : ""}
-            {percentage}% Price
-          </span>
-        </div>
-        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all duration-1300 ease-in-out ${
-              isHighDemand
-                ? "bg-gradient-to-r from-gray-400 to-blue-500"
-                : "bg-gradient-to-r from-gray-400 to-orange-500"
-            }`}
-            style={{
-              width: `${barWidth}%`,
-              filter: isAnimating
-                ? isHighDemand
-                  ? "drop-shadow(0 0 6px rgba(59, 130, 246, 0.2))"
-                  : "drop-shadow(0 0 6px rgba(249, 115, 22, 0.2))"
-                : "none",
-              transition: "filter 0.3s ease-in-out",
-            }}
-          />
-        </div>
-        <div className="text-xs text-gray-500">Margins Protected</div>
-      </div>
-    </div>
-  );
-}
+import DemandPricingDashboard from "./demand-pricing-dashboard";
 
 export default function CoreFeatures() {
   const scrollToCTA = () => {
@@ -235,13 +128,8 @@ export default function CoreFeatures() {
             <div className="lg:order-2">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-200/50 to-gray-300/50 rounded-2xl blur-3xl"></div>
-                <div className="relative bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Demand-Based Price Adjustments
-                    </h4>
-                  </div>
-                  <DemandPricingAnimation />
+                <div className="relative">
+                  <DemandPricingDashboard />
                 </div>
               </div>
             </div>
