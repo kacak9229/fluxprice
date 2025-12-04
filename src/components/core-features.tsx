@@ -151,7 +151,7 @@ export default function CoreFeatures() {
               </h3>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Our AI monitors competitors and adjusts prices
-                automatically—while keeping your margins safe.
+                automatically while keeping your margins safe.
               </p>
             </div>
             <div className="lg:order-2">
@@ -182,7 +182,7 @@ export default function CoreFeatures() {
                 pricing
               </h3>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Spot at-risk, high-value shoppers in real time—and deliver
+                Spot at-risk, high-value shoppers in real time and deliver
                 margin-safe, targeted discounts before they leave.
               </p>
             </div>

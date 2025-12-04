@@ -1,122 +1,109 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  Shield,
-  Users,
   ShoppingBag,
   TrendingUp,
   BarChart3,
   Settings,
   MessageCircle,
+  ArrowRight,
 } from "lucide-react";
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="bg-gray-50 py-16 md:py-32 dark:bg-transparent">
-      <div className="mx-auto max-w-5xl px-6">
-        <div className="relative">
-          <div className="relative z-10 grid grid-cols-6 gap-3">
-            {/* Feature 4 - Seamless Shopify Integration */}
-            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
-              <CardContent className="pt-6">
-                <div className="relative mx-auto flex aspect-square size-32 rounded-full border">
-                  <ShoppingBag
-                    className="m-auto size-12 text-primary"
-                    strokeWidth={1}
-                  />
-                </div>
-                <div className="relative z-10 mt-6 space-y-2 text-center">
-                  <h2 className="text-lg font-medium transition dark:text-white">
-                    Seamless Shopify Integration
-                  </h2>
-                  <p className="text-foreground">
-                    One-click install, works with any Online Store 2.0 theme —
-                    no code, no slowdowns.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+    <section id="features" className="bg-slate-50/50 py-24 dark:bg-transparent">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+          
+          {/* Feature 7 - Full Control & Guardrails */}
+          <Card className="col-span-1 md:col-span-3 group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+            <CardContent className="p-8 h-full flex flex-col justify-between">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Settings className="size-7 text-blue-600" strokeWidth={2} />
+              </div>
+              <div className="space-y-3">
+                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
+                  Full Control & Guardrails
+                </h2>
+                <p className="text-slate-600 leading-relaxed">
+                  Set your own pricing rules and limits. Leverage AI power without
+                  ever risking your margins or brand reputation.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Feature 5 - Learns from Your Sales */}
-            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
-              <CardContent className="pt-6">
-                <div className="pt-6 lg:px-6">
-                  <TrendingUp
-                    className="m-auto size-12 text-primary"
-                    strokeWidth={1}
-                  />
-                </div>
-                <div className="relative z-10 mt-14 space-y-2 text-center">
-                  <h2 className="text-lg font-medium transition">
-                    Learns from Your Sales
-                  </h2>
-                  <p className="text-foreground">
-                    Our AI learns from past sales and demand patterns to improve
-                    pricing automatically.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Feature 8 - Transparent Insights */}
+          <Card className="col-span-1 md:col-span-3 group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+            <CardContent className="p-8 h-full flex flex-col justify-between">
+              <div className="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <MessageCircle className="size-7 text-indigo-600" strokeWidth={2} />
+              </div>
+              <div className="space-y-3">
+                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
+                  Transparent Insights
+                </h2>
+                <p className="text-slate-600 leading-relaxed">
+                  No black boxes. See the exact reasoning behind every price change
+                  explained in plain, human-friendly language.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Feature 6 - Measure What Matters Most */}
-            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
-              <CardContent className="pt-6">
-                <div className="relative mx-auto flex aspect-square size-32 rounded-full border">
-                  <BarChart3
-                    className="m-auto size-12 text-primary"
-                    strokeWidth={1}
-                  />
-                </div>
-                <div className="relative z-10 mt-6 space-y-2 text-center">
-                  <h2 className="text-lg font-medium transition dark:text-white">
-                    Measure What Matters Most
-                  </h2>
-                  <p className="text-foreground">
-                    Transparent dashboards reveal exactly how dynamic pricing
-                    lifts revenue and protects profits.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Feature 4 - Seamless Shopify Integration */}
+          <Card className="col-span-1 md:col-span-2 group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+            <CardContent className="p-8 h-full">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform duration-300">
+                <ShoppingBag className="size-6 text-emerald-600" strokeWidth={2} />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-xl font-semibold tracking-tight text-slate-900">
+                  Seamless Integration
+                </h2>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  One-click Shopify install. Works with any Online Store 2.0 theme —
+                  no code, no slowdowns.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Feature 7 - Full Control & Guardrails */}
-            <Card className="card variant-outlined relative col-span-full overflow-hidden lg:col-span-3">
-              <CardContent className="grid pt-6 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <div className="mb-4">
-                    <Settings className="size-8 text-primary" strokeWidth={1} />
-                  </div>
-                  <h2 className="text-lg font-medium transition dark:text-white">
-                    Full Control & Guardrails
-                  </h2>
-                  <p className="text-foreground">
-                    Set your own pricing rules and limits — AI power, without
-                    risking your margins.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Feature 5 - Learns from Your Sales */}
+          <Card className="col-span-1 md:col-span-2 group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+            <CardContent className="p-8 h-full">
+              <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform duration-300">
+                <TrendingUp className="size-6 text-purple-600" strokeWidth={2} />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-xl font-semibold tracking-tight text-slate-900">
+                  Learns from Sales
+                </h2>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Our AI continuously analyzes your past sales and demand patterns to improve
+                  pricing accuracy automatically.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Feature 8 - Transparent Insights */}
-            <Card className="card variant-outlined relative col-span-full overflow-hidden lg:col-span-3">
-              <CardContent className="grid pt-6 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <div className="mb-4">
-                    <MessageCircle
-                      className="size-8 text-primary"
-                      strokeWidth={1}
-                    />
-                  </div>
-                  <h2 className="text-lg font-medium transition">
-                    Transparent Insights
-                  </h2>
-                  <p className="text-foreground">
-                    See the reasoning behind every price change — always in
-                    human-friendly language.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Feature 6 - Measure What Matters Most */}
+          <Card className="col-span-1 md:col-span-2 group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+            <CardContent className="p-8 h-full">
+              <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform duration-300">
+                <BarChart3 className="size-6 text-amber-600" strokeWidth={2} />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-xl font-semibold tracking-tight text-slate-900">
+                  Clear ROI Tracking
+                </h2>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Transparent dashboards reveal exactly how dynamic pricing
+                  lifts revenue and protects profits.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+          
         </div>
       </div>
     </section>

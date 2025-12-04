@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Mail,
   CheckCircle,
@@ -12,6 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -44,6 +45,9 @@ export default function WaitlistModal({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-md bg-white border-0 shadow-2xl p-8 text-center">
+          <VisuallyHidden.Root>
+            <DialogTitle>Success</DialogTitle>
+          </VisuallyHidden.Root>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -92,9 +96,14 @@ export default function WaitlistModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[440px] bg-white border-0 shadow-2xl p-0 gap-0 overflow-hidden">
+      <DialogContent className="sm:max-w-[440px] bg-white border-0 shadow-2xl p-0 gap-0 overflow-hidden rounded-2xl">
+        <VisuallyHidden.Root>
+          <DialogTitle>Join the Waitlist</DialogTitle>
+        </VisuallyHidden.Root>
+        
         {/* Header */}
-        <div className="bg-slate-50 px-6 py-6 border-b border-slate-100 text-center">
+        <div className="bg-slate-50 px-6 py-6 border-b border-slate-100 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"></div>
           <div className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide mb-3">
             <Sparkles className="w-3 h-3" />
             Limited Spots
@@ -120,15 +129,15 @@ export default function WaitlistModal({
               <label htmlFor="email" className="text-xs font-bold text-gray-700 uppercase tracking-wider ml-1">
                 Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <div className="relative group">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full h-11 pl-10 pr-4 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-gray-900"
+                  className="w-full h-11 pl-10 pr-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400 text-gray-900"
                   required
                   autoFocus
                 />
@@ -137,26 +146,26 @@ export default function WaitlistModal({
 
             {/* Compact Benefits */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
-                <CheckCircle className="w-3.5 h-3.5 text-blue-600" />
+              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                <CheckCircle className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                 <span>40% Early Bird Discount</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
-                <Zap className="w-3.5 h-3.5 text-blue-600" />
+              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                <Zap className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                 <span>Priority Onboarding</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
-                <Shield className="w-3.5 h-3.5 text-blue-600" />
+              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                <Shield className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                 <span>Margin Protection</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                 <span>VIP Support</span>
               </div>
             </div>
 
             {/* Simple Newsletter Checkbox */}
-            <label className="flex items-start gap-3 cursor-pointer group p-1">
+            <label className="flex items-start gap-3 cursor-pointer group p-1 rounded-lg hover:bg-gray-50 transition-colors">
               <div className="relative flex items-center justify-center mt-0.5">
                 <input
                   type="checkbox"
@@ -166,14 +175,14 @@ export default function WaitlistModal({
                 />
               </div>
               <span className="text-xs text-gray-500 leading-tight group-hover:text-gray-700 transition-colors">
-                Send me weekly tips on growing my Shopify store revenue (Unsubscribe anytime)
+                I want to receive newsletter on how to grow my Shopify store (Unsubscribe anytime)
               </span>
             </label>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-12 rounded-lg shadow-md shadow-blue-600/20 transition-all active:scale-[0.98]"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-12 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-[0.98]"
             >
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2 text-sm">
@@ -187,7 +196,7 @@ export default function WaitlistModal({
               ) : (
                 <span className="flex items-center gap-2 text-sm">
                   Join Waitlist
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               )}
             </Button>
@@ -196,11 +205,11 @@ export default function WaitlistModal({
 
         {/* Footer */}
         <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-center gap-6 text-[10px] font-medium text-gray-400 uppercase tracking-wide">
+          <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Secure</span>
+          <span>•</span>
           <span>No Credit Card</span>
           <span>•</span>
           <span>Cancel Anytime</span>
-          <span>•</span>
-          <span>Secure</span>
         </div>
       </DialogContent>
     </Dialog>

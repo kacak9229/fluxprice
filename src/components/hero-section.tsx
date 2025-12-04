@@ -140,28 +140,6 @@ export default function HeroSection() {
             <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div>
             <div className="mx-auto max-w-7xl px-6">
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
-                {/* <AnimatedGroup variants={{ item: itemVariants }}>
-                  <Link
-                    href="#link"
-                    className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
-                  >
-                    <span className="text-foreground text-sm">
-                      Join the Waitlist for Beta Access
-                    </span>
-                    <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
-
-                    <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
-                      <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-                        <span className="flex size-6">
-                          <ArrowRight className="m-auto size-3" />
-                        </span>
-                        <span className="flex size-6">
-                          <ArrowRight className="m-auto size-3" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </AnimatedGroup> */}
 
                 <TextEffect
                   preset="fade-in-blur"
@@ -197,7 +175,6 @@ export default function HeroSection() {
                     className="px-8 py-4 text-lg"
                   >
                     Join the Waitlist
-                    <ArrowRight className="ml-2 size-5" />
                   </Button>
                 </AnimatedGroup>
               </div>
@@ -216,25 +193,29 @@ export default function HeroSection() {
                 ...transitionVariants,
               }}
             >
-              <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
+              <div className="relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
                 <div
                   aria-hidden
                   className="bg-linear-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
                 />
                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                   <Image
-                    className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
+                    className="bg-background relative hidden rounded-2xl dark:block w-full h-auto"
                     src="/mail2.png"
                     alt="app screen"
                     width="2700"
                     height="1440"
+                    quality={100}
+                    priority
                   />
                   <Image
-                    className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                    src="/screenshot2.png"
+                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden w-full h-auto"
+                    src="/screenshot5.png"
                     alt="app screen"
                     width="2700"
                     height="1440"
+                    quality={100}
+                    priority
                   />
                 </div>
               </div>

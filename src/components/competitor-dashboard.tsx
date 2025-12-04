@@ -1,21 +1,68 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { TrendingUp, TrendingDown, BarChart3, ChevronDown } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import {
+  TrendingUp,
+  TrendingDown,
+  BarChart3,
+  ChevronDown,
+  ChevronUp,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function CompetitorDashboard() {
   const [marginGuardrail, setMarginGuardrail] = useState(0);
-  const [selectedMargin, setSelectedMargin] = useState(15);
+  const [selectedMargin, setSelectedMargin] = useState(10);
   const [autoAdjust, setAutoAdjust] = useState(false);
   const [priceDropDetected, setPriceDropDetected] = useState(false);
-  const [animatedText, setAnimatedText] = useState("Competitor prices dropped");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [graphData, setGraphData] = useState({ competitorY: 40, yourPriceY: 50 });
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const marginOptions = [5, 10, 15, 20, 25, 30];
 
-  // Animate counters on mount
+  // Close dropdown on click outside or scroll
   useEffect(() => {
-    const timer2 = setTimeout(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    const handleScroll = () => {
+      if (isDropdownOpen) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isDropdownOpen]);
+
+  // Main Animation Loop
+  useEffect(() => {
+    // 1. Initial State
+    const sequence = async () => {
+      // Reset
+      setMarginGuardrail(0);
+      setAutoAdjust(false);
+      setPriceDropDetected(false);
+      setGraphData({ competitorY: 40, yourPriceY: 50 }); // Initial prices
+
+      // Step 1: Count up margin
+      await new Promise((r) => setTimeout(r, 500));
       let count = 0;
       const interval = setInterval(() => {
         count += 1;
@@ -23,121 +70,85 @@ export default function CompetitorDashboard() {
         if (count >= selectedMargin) {
           clearInterval(interval);
         }
-      }, 50);
-    }, 800);
+      }, 40);
+      await new Promise((r) => setTimeout(r, 1000));
 
-    const timer3 = setTimeout(() => {
+      // Step 2: Enable Auto Adjust
       setAutoAdjust(true);
-    }, 1200);
+      await new Promise((r) => setTimeout(r, 1000));
 
-    const timer4 = setTimeout(() => {
+      // Step 3: Competitor Price Drops (Graph Animation)
       setPriceDropDetected(true);
-    }, 2000);
+      setGraphData((prev) => ({ ...prev, competitorY: 80 })); // Drop competitor price
+      await new Promise((r) => setTimeout(r, 800));
 
-    return () => {
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
+      // Step 4: Your Price Adjusts (but protected)
+      setGraphData((prev) => ({ ...prev, yourPriceY: 70 })); // Adjust your price
+      
+      // Loop after delay
+      setTimeout(() => sequence(), 6000);
     };
+
+    sequence();
   }, [selectedMargin]);
 
-  // Animated text alternation
-  useEffect(() => {
-    if (priceDropDetected) {
-      const interval = setInterval(() => {
-        setAnimatedText((prev) =>
-          prev === "Competitor prices dropped"
-            ? "Matching prices"
-            : "Competitor prices dropped"
-        );
-      }, 2000);
-      return () => clearInterval(interval);
-    }
-  }, [priceDropDetected]);
-
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-4 sm:p-8 border border-gray-200 shadow-lg">
-      {/* Top Row - 2 cards side by side */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-8">
-        {/* Competitor Price Feed */}
-        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Competitor Price Feed
-          </h3>
-          <div className="space-y-3 mb-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-green-500" />
-                <span className="text-sm text-gray-700">Competitor A</span>
-              </div>
-              <div className="w-3 h-3 bg-green-500 rounded-sm transform rotate-45"></div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-green-500" />
-                <span className="text-sm text-gray-700">Competitor B</span>
-              </div>
-              <div className="w-3 h-3 bg-green-500 rounded-sm transform rotate-45"></div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <TrendingDown className="w-4 h-4 text-red-500" />
-                <span className="text-sm text-gray-700">Competitor C</span>
-              </div>
-              <div className="w-3 h-3 bg-red-500 rounded-sm transform rotate-180"></div>
-            </div>
+    <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-2xl max-w-[400px] mx-auto font-sans transform hover:scale-[1.02] transition-transform duration-500">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-100 p-2 rounded-lg">
+            <Zap className="w-4 h-4 text-blue-600" fill="currentColor" />
           </div>
-
-          {/* Separator line */}
-          <div className="border-t border-gray-200 pt-3">
-            <div className="text-sm text-gray-600 font-medium">
-              127 updates (24h)
-            </div>
+          <div>
+            <h3 className="text-sm font-bold text-gray-900">Smart Repricer</h3>
+            <p className="text-[10px] text-gray-500">Active Monitoring</p>
           </div>
         </div>
+        <div className="flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+          <span className="text-[10px] font-bold text-green-700">LIVE</span>
+        </div>
+      </div>
 
-        {/* Minimum Margin */}
-        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between mb-4">
-            <div className="text-lg font-semibold text-gray-900">
-              Minimum Margin
-            </div>
-            <div
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                autoAdjust ? "bg-blue-500" : "bg-gray-300"
+      {/* Top Row - Stats */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        {/* Minimum Margin Card */}
+        <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 relative group hover:border-blue-200 transition-colors">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+              Min Margin
+            </span>
+            <motion.div
+              className={`w-8 h-4 rounded-full p-0.5 flex items-center transition-colors duration-300 ${
+                autoAdjust ? "bg-blue-600" : "bg-gray-300"
               }`}
             >
-              {autoAdjust && (
-                <span className="absolute left-1 text-xs font-medium text-white z-10">
-                  ON
-                </span>
-              )}
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  autoAdjust ? "translate-x-6" : "translate-x-1"
-                }`}
+              <motion.div
+                layout
+                className="w-3 h-3 bg-white rounded-full shadow-sm"
+                animate={{ x: autoAdjust ? 16 : 0 }}
               />
-            </div>
+            </motion.div>
           </div>
-
-          <div className="mb-4">
-            <div className="relative">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center justify-between w-full px-3 py-2 text-left bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                <span className="text-2xl font-bold text-gray-900">
-                  {marginGuardrail}%
-                </span>
-                <ChevronDown
-                  className={`w-4 h-4 text-gray-500 transition-transform ${
-                    isDropdownOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
+          
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center gap-1 text-2xl font-bold text-gray-900 tracking-tight hover:text-blue-600 transition-colors"
+            >
+              {marginGuardrail}%
+              <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <AnimatePresence>
               {isDropdownOpen && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 5, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 5, scale: 0.95 }}
+                  className="absolute top-full left-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-xl z-20 overflow-hidden min-w-[120px]"
+                >
                   {marginOptions.map((option) => (
                     <button
                       key={option}
@@ -146,104 +157,99 @@ export default function CompetitorDashboard() {
                         setMarginGuardrail(option);
                         setIsDropdownOpen(false);
                       }}
-                      className="w-full px-3 py-2 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                      className={`w-full px-4 py-2 text-left text-sm font-medium hover:bg-blue-50 transition-colors ${
+                        selectedMargin === option ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
                     >
-                      <span className="text-lg font-semibold text-gray-900">
-                        {option}%
-                      </span>
+                      {option}%
                     </button>
                   ))}
-                </div>
+                </motion.div>
               )}
-            </div>
+            </AnimatePresence>
           </div>
+        </div>
 
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-              <BarChart3 className="w-4 h-4 text-green-600" />
-            </div>
-            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-              <TrendingUp className="w-4 h-4 text-green-600" />
-            </div>
+        {/* Competitor Card */}
+        <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 group hover:border-red-200 transition-colors">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+              Competitor
+            </span>
+            <TrendingDown className={`w-3.5 h-3.5 text-red-500 transition-opacity duration-300 ${priceDropDetected ? 'opacity-100' : 'opacity-0'}`} />
+          </div>
+          <div className="text-2xl font-bold text-gray-900 tracking-tight">
+            -$12
+          </div>
+          <div className="text-[10px] text-red-500 font-medium mt-1 flex items-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-red-500"></span>
+            Price Drop
           </div>
         </div>
       </div>
 
-      {/* Bottom Section - Price Drop Detected (2x1) */}
-      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 relative overflow-hidden">
-        {/* Animated Text */}
-        <div className="text-center mb-6">
-          <div className="text-xl sm:text-2xl font-bold text-gray-900 transition-opacity duration-500">
-            {animatedText}
-          </div>
+      {/* Dynamic Graph Area */}
+      <div className="relative h-40 bg-gradient-to-b from-blue-50/50 to-white rounded-2xl border border-blue-100 overflow-hidden p-4 flex items-end justify-center">
+        {/* Grid lines */}
+        <div className="absolute inset-0 w-full h-full opacity-30" 
+             style={{ backgroundImage: 'linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
         </div>
 
-        {/* Chart Area */}
-        <div className="h-24 relative">
-          {/* Price Line */}
-          <svg className="w-full h-full" viewBox="0 0 300 100">
-            <defs>
-              <linearGradient
-                id="priceGradient"
-                x1="0%"
-                y1="0%"
-                x2="0%"
-                y2="100%"
-              >
-                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.1" />
-              </linearGradient>
-            </defs>
+        {/* Animated Price Lines */}
+        <svg className="absolute inset-0 w-full h-full overflow-visible">
+          {/* Competitor Line (Red/Gray) */}
+          <motion.path
+            d={`M0,${graphData.competitorY} Q150,${graphData.competitorY} 400,${graphData.competitorY}`}
+            fill="none"
+            stroke={priceDropDetected ? "#ef4444" : "#94a3b8"}
+            strokeWidth="2"
+            strokeDasharray="4 4"
+            animate={{ d: `M0,${graphData.competitorY} Q150,${graphData.competitorY - 5} 400,${graphData.competitorY}` }}
+            transition={{ type: "spring", stiffness: 50 }}
+          />
+          
+          {/* Your Price Line (Blue) - Reacting but protected */}
+          <motion.path
+            d={`M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY}`}
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth="3"
+            strokeLinecap="round"
+            animate={{ d: `M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY}` }}
+            transition={{ type: "spring", stiffness: 60, delay: 0.2 }}
+          />
+          
+          {/* Area under your price */}
+          <motion.path
+            d={`M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY} V200 H0 Z`}
+            fill="url(#blueGradient)"
+            className="opacity-50"
+            animate={{ d: `M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY} V200 H0 Z` }}
+            transition={{ type: "spring", stiffness: 60, delay: 0.2 }}
+          />
+          
+          <defs>
+            <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
 
-            {/* Price line */}
-            <path
-              d="M 0 60 Q 50 50 100 45 T 200 40 Q 250 35 300 30"
-              stroke="#3B82F6"
-              strokeWidth="3"
-              fill="none"
-              className="animate-pulse"
-            />
-
-            {/* Fill area */}
-            <path
-              d="M 0 60 Q 50 50 100 45 T 200 40 Q 250 35 300 30 L 300 100 L 0 100 Z"
-              fill="url(#priceGradient)"
-            />
-
-            {/* Data point */}
-            <circle
-              cx="250"
-              cy="35"
-              r="4"
-              fill="#3B82F6"
-              className="animate-bounce"
-            />
-          </svg>
-
-          {/* Dotted competitor line */}
-          <svg className="w-full h-full absolute top-0" viewBox="0 0 300 100">
-            <path
-              d="M 0 70 Q 75 65 150 60 T 300 55"
-              stroke="#60A5FA"
-              strokeWidth="2"
-              strokeDasharray="5,5"
-              fill="none"
-              opacity="0.7"
-            />
-          </svg>
-        </div>
-
-        {/* Profit Protected Badge */}
-        <div className="mt-4 flex justify-center">
-          <div
-            className="bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200 rounded-lg p-3"
-            style={{ width: "100%", maxWidth: "300px" }}
-          >
-            <div className="text-center text-sm font-medium text-teal-800">
-              Profit Protected
-            </div>
-          </div>
-        </div>
+        {/* Status Badge */}
+        <AnimatePresence>
+          {autoAdjust && (
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              className="absolute bottom-4 bg-white/90 backdrop-blur-sm border border-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg flex items-center gap-1.5 z-10"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Margin Protected
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

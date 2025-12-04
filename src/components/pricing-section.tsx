@@ -23,30 +23,31 @@ export default function PricingSection() {
       <div className="mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            🎉 Early Bird Discount - Limited Time
-          </div>
           <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 mb-4">
             Ready to Elevate Your Shopify Store's Profitability?
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
             Start free, then pay as you grow. No hidden fees, no surprises.
           </p>
-        </div>
+          
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap items-center justify-center gap-8 mb-6 text-gray-600">
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green-600" />
+              <span>14-day free trial</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green-600" />
+              <span>No credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green-600" />
+              <span>Cancel anytime</span>
+            </div>
+          </div>
 
-        {/* Trust Indicators */}
-        <div className="flex flex-wrap items-center justify-center gap-8 mb-12 text-gray-600">
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-600" />
-            <span>14-day free trial</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-600" />
-            <span>No credit card required</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-600" />
-            <span>Cancel anytime</span>
+           <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium">
+            🎉 Early Bird Discount - Limited Time
           </div>
         </div>
 
@@ -95,7 +96,7 @@ export default function PricingSection() {
                 </div>
               </div>
               <Button
-                className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-lg"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
                 onClick={() => handleJoinWaitlist("Core", "$49/month")}
               >
                 Join the Waitlist
@@ -150,7 +151,7 @@ export default function PricingSection() {
                 </div>
               </div>
               <Button
-                className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-lg"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
                 onClick={() => handleJoinWaitlist("Pro", "$99/month")}
               >
                 Join the Waitlist
@@ -165,11 +166,6 @@ export default function PricingSection() {
           planName={selectedPlan?.name}
           planPrice={selectedPlan?.price}
         />
-
-        {/* Social Proof */}
-     
-
-        {/* Bottom CTA */}
       </div>
     </section>
   );

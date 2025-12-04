@@ -42,8 +42,8 @@ const testimonials: Testimonial[] = [
     quote:
       "What impressed me most was how quickly we could implement sophisticated pricing strategies. The learning curve was minimal, the impact immediate.",
     rating: 5,
-    result: "12% margin improvement within 6 weeks",
-    timeframe: "Within 6 weeks",
+    result: "12% revenue increase within 6 weeks",
+    timeframe: "First quarter",
   },
   {
     name: "Elena Rodriguez",
@@ -53,8 +53,8 @@ const testimonials: Testimonial[] = [
     quote:
       "The market insights help us understand not just what to price, but when to adjust. It's like having a seasoned analyst on the team.",
     rating: 5,
-    result: "24% conversion increase within 3 months",
-    timeframe: "Over 3 months",
+    result: "24% revenue increase within 3 months",
+    timeframe: "First quarter",
   },
   {
     name: "David Park",
@@ -64,8 +64,8 @@ const testimonials: Testimonial[] = [
     quote:
       "In our competitive space, pricing precision matters. This platform gives us the confidence to compete strategically rather than reactively.",
     rating: 5,
-    result: "22% profit increase within 3 months",
-    timeframe: "Last quarter",
+    result: "22% revenue increase within 2 months",
+    timeframe: "First quarter",
   },
   {
     name: "Isabella Martinez",
@@ -76,7 +76,7 @@ const testimonials: Testimonial[] = [
       "As a smaller operation, we needed enterprise-level pricing intelligence without the complexity. This delivers exactly that balance.",
     rating: 5,
     result: "14% revenue increase within 4 months",
-    timeframe: "Past 4 months",
+    timeframe: "First quarter",
   },
   {
     name: "James Wilson",
@@ -86,8 +86,8 @@ const testimonials: Testimonial[] = [
     quote:
       "The seasonal pricing optimization has been remarkable. We're capturing demand peaks more effectively while maintaining healthy margins year-round.",
     rating: 5,
-    result: "28% revenue increase during peak season",
-    timeframe: "Peak season",
+    result: "28% revenue increase within 4 months",
+    timeframe: "First quarter",
   },
 ];
 

@@ -5,150 +5,196 @@ import {
   Bell,
   CheckCircle,
   TrendingUp,
-  TrendingDown,
   Target,
-  DollarSign,
+  ArrowRight,
+  User,
+  ShoppingCart,
+  Zap,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function ShopperRecoveryDashboard() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [recoveries, setRecoveries] = useState(0);
 
   useEffect(() => {
-    const steps = [
-      { delay: 500, step: 1 }, // Show detection
-      { delay: 2000, step: 2 }, // Show customer data
-      { delay: 3500, step: 3 }, // Show offer
-      { delay: 5000, step: 4 }, // Show results
-    ];
+    const timer = setInterval(() => {
+      setCurrentStep((prev) => (prev + 1) % 4);
+    }, 3000); // Change step every 3 seconds
 
-    steps.forEach(({ delay, step }) => {
-      setTimeout(() => setCurrentStep(step), delay);
-    });
-
-    // Animate recovery counter
-    setTimeout(() => {
-      let count = 0;
-      const interval = setInterval(() => {
-        count += 400;
-        setRecoveries(count);
-        if (count >= 12480) {
-          clearInterval(interval);
-        }
-      }, 50);
-    }, 5200);
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-4 sm:p-8 border border-gray-200 shadow-lg">
-      {/* Step 1: Detection Alert */}
-      <div
-        className={`relative transition-all duration-500 mb-6 ${
-          currentStep >= 1
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4"
-        }`}
-      >
-        <div className="bg-white backdrop-blur-sm border border-gray-200 rounded-xl p-5 shadow-lg relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent rounded-xl"></div>
-          <div className="relative flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center shadow-lg border border-blue-300">
-              <Bell className="w-6 h-6 text-blue-600 animate-pulse drop-shadow-sm" />
-            </div>
-            <div>
-              <div className="font-semibold text-gray-900 text-lg">
-                High-Value Shopper About to Leave
-              </div>
-            </div>
+    <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-2xl max-w-[400px] mx-auto font-sans relative overflow-hidden">
+      {/* Background Gradient Blob */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full filter blur-3xl opacity-50 -mr-32 -mt-32"></div>
+
+      {/* Header Status */}
+      <div className="flex items-center justify-between mb-6 relative z-10">
+        <div className="flex items-center gap-2">
+          <div className="bg-indigo-100 p-2 rounded-lg">
+            <Target className="w-4 h-4 text-indigo-600" />
           </div>
+          <div>
+            <h3 className="text-sm font-bold text-gray-900">Shopper Recovery</h3>
+            <p className="text-[10px] text-gray-500">Real-time Detection</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+          <span className="text-[10px] font-bold text-green-700">ACTIVE</span>
         </div>
       </div>
 
-      {/* Step 2: Customer Profile */}
-      <div
-        className={`relative transition-all duration-500 mb-6 ${
-          currentStep >= 2
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4"
-        }`}
-      >
-        <div className="bg-white backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-lg">
-          <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-3 text-lg">
-            <div className="w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center shadow-md border border-gray-300">
-              <Target className="w-4 h-4 text-gray-600" />
-            </div>
-            Shopper Profile
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="text-center p-4 bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg border border-gray-200 shadow-sm">
-              <div className="text-3xl font-bold text-gray-900 mb-2 drop-shadow-sm">
-                $468
+      {/* Animated Content Area */}
+      <div className="relative h-[280px]">
+        <AnimatePresence mode="wait">
+          {currentStep === 0 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 flex flex-col justify-center"
+            >
+              <div className="bg-red-50 rounded-2xl p-6 border border-red-100 text-center relative overflow-hidden group">
+                <div className="absolute inset-0 bg-red-100/50 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md mx-auto mb-4 relative z-10">
+                  <Bell className="w-8 h-8 text-red-500 animate-bounce" />
+                </div>
+                <h4 className="text-lg font-bold text-gray-900 mb-2 relative z-10">
+                  High Exit Risk Detected!
+                </h4>
+                <p className="text-sm text-gray-600 relative z-10">
+                  High-value shopper showing signs of abandonment.
+                </p>
               </div>
-              <div className="text-sm text-gray-600">Current Cart</div>
-            </div>
-            <div className="text-center p-4 bg-gradient-to-b from-blue-50 to-blue-100 rounded-lg border border-blue-200 shadow-sm">
-              <div className="text-3xl font-bold text-blue-700 mb-2 drop-shadow-sm">
-                $2,300
+            </motion.div>
+          )}
+
+          {currentStep === 1 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 flex flex-col justify-center"
+            >
+              <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100 relative overflow-hidden">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                    <User className="w-4 h-4 text-blue-600" />
+                    Shopper Profile
+                  </h4>
+                  <span className="text-[10px] font-bold bg-white px-2 py-1 rounded text-blue-600 border border-blue-100">VIP</span>
+                </div>
+                <div className="space-y-3">
+                  <div className="bg-white p-3 rounded-xl flex justify-between items-center shadow-sm">
+                    <span className="text-xs text-gray-500">Cart Value</span>
+                    <span className="text-lg font-bold text-gray-900">$468.00</span>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl flex justify-between items-center shadow-sm">
+                    <span className="text-xs text-gray-500">Lifetime Value</span>
+                    <span className="text-lg font-bold text-blue-600">$2,300</span>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl flex justify-between items-center shadow-sm">
+                    <span className="text-xs text-gray-500">Exit Probability</span>
+                    <div className="flex items-center gap-1 text-red-500 font-bold">
+                      <TrendingUp className="w-3 h-3" />
+                      86%
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="text-sm text-gray-600">Lifetime Value</div>
-            </div>
-            <div className="text-center p-4 bg-gradient-to-b from-orange-50 to-orange-100 rounded-lg border border-orange-200 shadow-sm">
-              <div className="text-3xl font-bold text-orange-700 mb-2 drop-shadow-sm">
-                86%
+            </motion.div>
+          )}
+
+          {currentStep === 2 && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 flex flex-col justify-center"
+            >
+              <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100 text-center">
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md mx-auto mb-4 rotate-3">
+                  <Zap className="w-7 h-7 text-purple-600" fill="currentColor" />
+                </div>
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                  Generating Offer...
+                </h4>
+                <div className="space-y-2 text-left bg-white p-4 rounded-xl shadow-sm border border-purple-50">
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 2 }}
+                      className="h-full bg-purple-500 rounded-full"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 text-center mt-2">
+                    Calculating optimal discount based on LTV & margin...
+                  </p>
+                </div>
               </div>
-              <div className="text-sm text-gray-600">Exit Risk</div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          )}
+
+          {currentStep === 3 && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 flex flex-col justify-center"
+            >
+              <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-100 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500"></div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
+                    <CheckCircle className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-900">Offer Deployed</h4>
+                    <p className="text-[10px] text-emerald-700">Sent via Popup</p>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm mb-3">
+                  <p className="text-2xl font-black text-gray-900 mb-1">10% OFF</p>
+                  <p className="text-xs text-gray-500">+ Free Priority Shipping</p>
+                </div>
+
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-gray-500">Margin Impact</span>
+                  <span className="font-bold text-emerald-600 flex items-center gap-1">
+                    Safe <CheckCircle className="w-3 h-3" />
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Step 3: AI Action */}
-      <div
-        className={`relative transition-all duration-500 mb-6 ${
-          currentStep >= 3
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4"
-        }`}
-      >
-        <div className="bg-white backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent rounded-xl"></div>
-          <div className="relative flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center shadow-lg border border-blue-300">
-              <CheckCircle className="w-6 h-6 text-blue-600 drop-shadow-sm" />
-            </div>
-            <div>
-              <div className="font-semibold text-gray-900 text-lg">
-                Personalized Discount Auto-applied
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-b from-gray-50 to-gray-100 backdrop-blur-sm rounded-lg p-5 border border-gray-200 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-semibold text-gray-900 text-lg">
-                8% off + Free Fast Shipping
-              </span>
-              <span className="text-xs bg-gradient-to-r from-teal-50 to-cyan-50 text-teal-800 px-3 py-1.5 rounded-full border border-teal-200 shadow-sm">
-                Margins Protected
-              </span>
-            </div>
-            <div className="text-sm text-gray-600">
-              Discount based on: Cart value, LTV, exit intent, checkout delay
-            </div>
-          </div>
-        </div>
+      {/* Progress Dots */}
+      <div className="flex justify-center gap-2 mt-4">
+        {[0, 1, 2, 3].map((step) => (
+          <motion.div
+            key={step}
+            className={`h-1.5 rounded-full ${
+              step === currentStep ? "bg-indigo-600 w-6" : "bg-gray-200 w-1.5"
+            }`}
+            layout
+            transition={{ duration: 0.3 }}
+          />
+        ))}
       </div>
-
-      {/* Step 4: Results */}
-      <div
-        className={`relative transition-all duration-500 ${
-          currentStep >= 4
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4"
-        }`}
-      ></div>
-
-      {/* Premium Progress Indicator */}
     </div>
   );
 }
