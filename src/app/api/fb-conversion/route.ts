@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { eventName, eventSourceUrl, userData, customData } = body;
 
     // Get client IP and User Agent from request headers
-    const clientIp = req.headers.get("x-forwarded-for") || req.ip;
+    const clientIp = req.headers.get("x-forwarded-for");
     const userAgent = req.headers.get("user-agent");
 
     await sendFbEvent({
