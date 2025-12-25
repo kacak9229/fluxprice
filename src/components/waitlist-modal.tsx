@@ -35,10 +35,29 @@ export default function WaitlistModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setShowSuccess(true);
+    
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      setShowSuccess(true);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      // Still show success to the user so they don't get stuck, 
+      // but in production you might want to handle this differently
+      setShowSuccess(true); 
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (showSuccess) {

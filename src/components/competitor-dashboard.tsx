@@ -93,21 +93,21 @@ export default function CompetitorDashboard() {
   }, [selectedMargin]);
 
   return (
-    <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-2xl max-w-[400px] mx-auto font-sans transform hover:scale-[1.02] transition-transform duration-500">
+    <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-2xl max-w-[400px] lg:max-w-[500px] mx-auto font-sans transform hover:scale-[1.02] transition-transform duration-500">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="bg-blue-100 p-2 rounded-lg">
-            <Zap className="w-4 h-4 text-blue-600" fill="currentColor" />
+            <Zap className="w-4 h-4 lg:w-5 lg:h-5 text-blue-600" fill="currentColor" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-gray-900">Smart Repricer</h3>
-            <p className="text-[10px] text-gray-500">Active Monitoring</p>
+            <h3 className="text-[15px] lg:text-sm font-bold text-gray-900">Smart Repricer</h3>
+            <p className="text-[13px] lg:text-[10px] text-gray-500">Active Monitoring</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">
           <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-          <span className="text-[10px] font-bold text-green-700">LIVE</span>
+          <span className="text-[13px] lg:text-[10px] font-bold text-green-700">LIVE</span>
         </div>
       </div>
 
@@ -116,7 +116,7 @@ export default function CompetitorDashboard() {
         {/* Minimum Margin Card */}
         <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 relative group hover:border-blue-200 transition-colors">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+            <span className="text-[13px] lg:text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
               Min Margin
             </span>
             <motion.div
@@ -135,10 +135,10 @@ export default function CompetitorDashboard() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-1 text-2xl font-bold text-gray-900 tracking-tight hover:text-blue-600 transition-colors"
+              className="flex items-center gap-1 text-3xl lg:text-2xl font-bold text-gray-900 tracking-tight hover:text-blue-600 transition-colors"
             >
               {marginGuardrail}%
-              <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-5 h-5 lg:w-4 lg:h-4 text-gray-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
             
             <AnimatePresence>
@@ -173,15 +173,15 @@ export default function CompetitorDashboard() {
         {/* Competitor Card */}
         <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 group hover:border-red-200 transition-colors">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+            <span className="text-[13px] lg:text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
               Competitor
             </span>
-            <TrendingDown className={`w-3.5 h-3.5 text-red-500 transition-opacity duration-300 ${priceDropDetected ? 'opacity-100' : 'opacity-0'}`} />
+            <TrendingDown className={`w-4 h-4 lg:w-3.5 lg:h-3.5 text-red-500 transition-opacity duration-300 ${priceDropDetected ? 'opacity-100' : 'opacity-0'}`} />
           </div>
-          <div className="text-2xl font-bold text-gray-900 tracking-tight">
+          <div className="text-3xl lg:text-2xl font-bold text-gray-900 tracking-tight">
             -$12
           </div>
-          <div className="text-[10px] text-red-500 font-medium mt-1 flex items-center gap-1">
+          <div className="text-[13px] lg:text-[10px] text-red-500 font-medium mt-1 flex items-center gap-1">
             <span className="w-1 h-1 rounded-full bg-red-500"></span>
             Price Drop
           </div>
@@ -189,14 +189,14 @@ export default function CompetitorDashboard() {
       </div>
 
       {/* Dynamic Graph Area */}
-      <div className="relative h-40 bg-gradient-to-b from-blue-50/50 to-white rounded-2xl border border-blue-100 overflow-hidden p-4 flex items-end justify-center">
+      <div className="relative h-40 bg-gradient-to-b from-blue-50/50 to-white rounded-2xl border border-blue-100 overflow-hidden">
         {/* Grid lines */}
-        <div className="absolute inset-0 w-full h-full opacity-30" 
+        <div className="absolute inset-0 w-full h-full opacity-30 rounded-2xl" 
              style={{ backgroundImage: 'linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
         </div>
 
         {/* Animated Price Lines */}
-        <svg className="absolute inset-0 w-full h-full overflow-visible">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 160" preserveAspectRatio="none">
           {/* Competitor Line (Red/Gray) */}
           <motion.path
             d={`M0,${graphData.competitorY} Q150,${graphData.competitorY} 400,${graphData.competitorY}`}
@@ -221,10 +221,10 @@ export default function CompetitorDashboard() {
           
           {/* Area under your price */}
           <motion.path
-            d={`M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY} V200 H0 Z`}
+            d={`M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY} V160 H0 Z`}
             fill="url(#blueGradient)"
             className="opacity-50"
-            animate={{ d: `M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY} V200 H0 Z` }}
+            animate={{ d: `M0,${graphData.yourPriceY} Q150,${graphData.yourPriceY} 400,${graphData.yourPriceY} V160 H0 Z` }}
             transition={{ type: "spring", stiffness: 60, delay: 0.2 }}
           />
           
@@ -237,19 +237,21 @@ export default function CompetitorDashboard() {
         </svg>
 
         {/* Status Badge */}
-        <AnimatePresence>
-          {autoAdjust && (
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              className="absolute bottom-4 bg-white/90 backdrop-blur-sm border border-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg flex items-center gap-1.5 z-10"
-            >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Margin Protected
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="absolute inset-0 flex items-end justify-center p-4 pointer-events-none">
+          <AnimatePresence>
+            {autoAdjust && (
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 20, opacity: 0 }}
+                className="bg-white/90 backdrop-blur-sm border border-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-[15px] lg:text-xs font-bold shadow-lg flex items-center gap-1.5 pointer-events-auto"
+              >
+                <ShieldCheck className="w-4 h-4 lg:w-3.5 lg:h-3.5" />
+                Margin Protected
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

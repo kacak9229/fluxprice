@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -121,6 +121,11 @@ const scrollToCTA = () => {
 export default function WallOfLoveSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [prevTranslate, setPrevTranslate] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   // Determine cards per view based on screen size
   useEffect(() => {
@@ -147,6 +152,54 @@ export default function WallOfLoveSection() {
 
   const handleNext = () => {
     setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
+
+  // Unified Pointer Handlers
+  const handlePointerDown = (e: React.PointerEvent) => {
+    // Only handle primary button (left click) or touch
+    if (e.button !== 0) return;
+    
+    setIsDragging(true);
+    setStartX(e.clientX);
+    
+    // Capture pointer to keep tracking even if it leaves the element
+    (e.target as Element).setPointerCapture(e.pointerId);
+
+    if (sliderRef.current) {
+      sliderRef.current.style.transition = 'none';
+    }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    e.preventDefault(); // Prevent scrolling while dragging horizontally
+    const currentPosition = e.clientX;
+    const diff = currentPosition - startX;
+    setCurrentTranslate(prevTranslate + diff);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    // Release capture
+    (e.target as Element).releasePointerCapture(e.pointerId);
+    
+    const movedBy = currentTranslate - prevTranslate;
+    
+    // Threshold for swipe (50px)
+    if (movedBy < -50 && currentIndex < maxIndex) {
+      handleNext();
+    } else if (movedBy > 50 && currentIndex > 0) {
+      handlePrev();
+    }
+    
+    if (sliderRef.current) {
+      sliderRef.current.style.transition = 'transform 0.5s ease-out';
+    }
+    
+    setCurrentTranslate(0);
+    setPrevTranslate(0);
   };
 
   const TestimonialCard = ({
@@ -193,6 +246,7 @@ export default function WallOfLoveSection() {
                 loading="lazy"
                 width="120"
                 height="120"
+                className="pointer-events-none"
               />
               <AvatarFallback className="bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 font-medium">
                 {name
@@ -261,19 +315,31 @@ export default function WallOfLoveSection() {
             </button>
 
             {/* Slider Container */}
-            <div className="overflow-hidden">
+            <div className="overflow-hidden md:px-0">
               <div
-                className="flex transition-transform duration-500 ease-out gap-6"
+                ref={sliderRef}
+                className="flex transition-transform duration-500 ease-out gap-4 md:gap-6 cursor-grab active:cursor-grabbing"
                 style={{
-                  transform: `translateX(-${currentIndex * (100 / cardsPerView + 2)}%)`,
+                  transform: `translateX(calc(-${currentIndex} * ${
+                    cardsPerView === 1
+                      ? "calc(80% + 8px)"
+                      : `calc((100% + 24px) / ${cardsPerView})`
+                  } + ${isDragging ? currentTranslate : 0}px))`,
+                  touchAction: "pan-y",
                 }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerLeave={handlePointerUp}
               >
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 select-none"
                     style={{
-                      width: `calc(${100 / cardsPerView}% - ${(cardsPerView - 1) * 24 / cardsPerView}px)`,
+                      width: cardsPerView === 1 
+                        ? 'calc(80% - 8px)' 
+                        : `calc(${100 / cardsPerView}% - ${(cardsPerView - 1) * 24 / cardsPerView}px)`,
                     }}
                   >
                     <TestimonialCard {...testimonial} />

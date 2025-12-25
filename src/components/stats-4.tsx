@@ -21,9 +21,9 @@ export default function StatsSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Stats Section */}
           <div className="space-y-8">
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div className="text-center lg:text-left">
-                <div className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent mb-4">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent mb-4">
                   <span className="inline-block text-xl md:text-2xl text-primary/80 mr-2 align-baseline">Up to</span>
                   30%
                 </div>
@@ -36,7 +36,7 @@ export default function StatsSection() {
               </div>
 
               <div className="text-center lg:text-left">
-                <div className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4">
                   75+
                 </div>
                 <p className="text-lg font-medium text-muted-foreground">
@@ -49,7 +49,7 @@ export default function StatsSection() {
             </div>
 
             {/* Additional Stats Row */}
-            <div className="grid grid-cols-2 gap-8 pt-8 border-t border-muted">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-muted">
               <div className="text-center lg:text-left">
                 <div className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
                   92%
