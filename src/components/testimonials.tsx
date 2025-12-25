@@ -300,7 +300,7 @@ export default function WallOfLoveSection() {
           </div>
 
           {/* Bottom section */}
-          <div className="text-center mt-20 pt-12 border-t border-slate-200/60 dark:border-slate-800/60">
+          {/* <div className="text-center mt-20 pt-12 border-t border-slate-200/60 dark:border-slate-800/60">
             <div className="flex items-center justify-center gap-12 text-sm text-slate-500 dark:text-slate-400">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
@@ -315,28 +315,9 @@ export default function WallOfLoveSection() {
                 <span className="font-light">SOC 2 Type II certified</span>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* CTA Section */}
-          <div className="text-center bg-gradient-to-r from-gray-50 to-white rounded-2xl p-12 border border-gray-200 mt-20">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">
-              Ready to Transform Your Pricing Strategy?
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of Shopify stores already using Fluxprice AI to
-              maximize revenue while protecting margins. See results in your
-              first week.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="px-8 bg-gray-900 hover:bg-gray-800 text-white"
-                onClick={scrollToCTA}
-              >
-                Join the Waitlist
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </section>

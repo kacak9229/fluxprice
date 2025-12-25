@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Mail, SendHorizonal, ArrowRight } from "lucide-react";
-import WaitlistModal from "./waitlist-modal";
+import { ArrowRight } from "lucide-react";
+
+const scrollToPricing = () => {
+  const pricingElement = document.getElementById("pricing");
+  if (pricingElement) {
+    pricingElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+};
 
 export default function CallToAction() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <section
       id="cta"
@@ -31,7 +37,7 @@ export default function CallToAction() {
           <div className="flex justify-center mb-12">
             <Button
               size="lg"
-              onClick={() => setIsModalOpen(true)}
+              onClick={scrollToPricing}
               className="h-14 px-8 text-lg bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Join the Waitlist
@@ -55,11 +61,6 @@ export default function CallToAction() {
             </div>
           </div>
         </div>
-
-        <WaitlistModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
       </div>
     </section>
   );
