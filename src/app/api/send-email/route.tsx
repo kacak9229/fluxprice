@@ -1,7 +1,5 @@
-import { EmailTemplate } from '../../../components/email-template';
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
-import * as React from 'react';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const audienceId = process.env.RESEND_AUDIENCE_ID;
@@ -41,7 +39,7 @@ export async function POST(request: Request) {
                   <tr>
                     <td align="center" style="padding: 0 40px;">
                       <h1 style="color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.5px;">
-                        You're on the list! 🚀
+                        You're almost done! 🚀
                       </h1>
                       <p style="color: #555555; font-size: 16px; line-height: 26px; margin: 0 0 32px 0;">
                        Welcome to the future of e-commerce pricing. Your spot for early access is pending confirmation.
