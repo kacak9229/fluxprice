@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     // 1. Send the Welcome Email
     const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'FluxPrice AI <hello@fluxpriceai.com>',
+      from: 'FluxPrice Waitlist Confirmation <hello@fluxpriceai.com>',
       to: [email],
       subject: 'Welcome to FluxPrice Waitlist 🚀',
       // react: <EmailTemplate firstName="Future User" />,
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Welcome to FluxPrice</title>
+          <title>You’re almost done!</title>
         </head>
         <body style="margin: 0; padding: 0; background-color: #f6f9fc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
           <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f6f9fc; padding: 40px 0;">
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
                   <!-- Header with Logo -->
                   <tr>
                     <td align="center" style="padding: 40px 0 20px 0; background-color: #ffffff;">
-                      <img src="https://fluxpriceai.com/fluxprice.png" alt="FluxPrice AI" width="180" style="display: block; border: 0; max-width: 100%; height: auto;" />
+                      <img src="https://fluxpriceai.com/fluxprice2.png" alt="FluxPrice AI" width="180" style="display: block; border: 0; max-width: 100%; height: auto;" />
                     </td>
                   </tr>
 
@@ -44,24 +44,8 @@ export async function POST(request: Request) {
                         You're on the list! 🚀
                       </h1>
                       <p style="color: #555555; font-size: 16px; line-height: 26px; margin: 0 0 32px 0;">
-                        Welcome to the future of e-commerce pricing. Your spot for early access is officially secured.
+                       Welcome to the future of e-commerce pricing. Your spot for early access is pending confirmation.
                       </p>
-                    </td>
-                  </tr>
-
-                  <!-- Status Card -->
-                  <tr>
-                    <td style="padding: 0 40px 32px 40px;">
-                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f0f7ff; border-radius: 8px; border-left: 4px solid #2563eb;">
-                        <tr>
-                          <td style="padding: 20px;">
-                            <p style="margin: 0; color: #1e3a8a; font-size: 15px; font-weight: 500; line-height: 22px;">
-                              <strong>Status: Confirmed</strong><br>
-                              You are now in line to receive our exclusive beta invite and early-bird pricing strategies.
-                            </p>
-                          </td>
-                        </tr>
-                      </table>
                     </td>
                   </tr>
 
@@ -69,7 +53,7 @@ export async function POST(request: Request) {
                   <tr>
                     <td align="center" style="padding: 0 40px 48px 40px;">
                       <a href="https://fluxpriceai.com/thank-you" style="background-color: #000000; color: #ffffff; padding: 16px 36px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block; transition: background-color 0.2s;">
-                        Confirm & Visit Dashboard
+                        Confirm Email
                       </a>
                       <p style="margin-top: 24px; color: #8898aa; font-size: 13px;">
                         (No password required yet)
@@ -81,7 +65,7 @@ export async function POST(request: Request) {
                   <tr>
                     <td style="background-color: #f9fafb; padding: 32px 40px; border-top: 1px solid #e1e1e1; text-align: center;">
                       <p style="margin: 0 0 12px 0; color: #6b7280; font-size: 12px; line-height: 18px;">
-                        © ${new Date().getFullYear()} FluxPrice AI. All rights reserved.<br>
+                        © ${new Date().getFullYear()} Fluxprice AI. All rights reserved.<br>
                         San Francisco, CA
                       </p>
                       <div style="margin-top: 16px;">
@@ -116,12 +100,12 @@ export async function POST(request: Request) {
         contactPayload.audienceId = audienceId;
       }
 
-      const { data, error } = await resend.contacts.create(contactPayload);
-      if (error) {
-         console.error('Error adding contact to audience:', error);
-      } else {
-         console.log('Contact added successfully:', data);
-      }
+      // const { data, error } = await resend.contacts.create(contactPayload);
+      // if (error) {
+      //    console.error('Error adding contact to audience:', error);
+      // } else {
+      //    console.log('Contact added successfully:', data);
+      // }
     } catch (contactError) {
       console.error('Failed to add contact to audience:', contactError);
       // We don't fail the request if just adding to list fails, as the email was sent

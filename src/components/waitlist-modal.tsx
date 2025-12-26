@@ -89,7 +89,7 @@ export default function WaitlistModal({
             </div>
             <div className="space-y-3">
               <h3 className="text-2xl font-bold text-gray-900">
-                You're on the list! 🚀
+                Confirm your email! 🚀
               </h3>
               <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
                 <p className="text-sm text-gray-600 mb-1">
@@ -105,7 +105,7 @@ export default function WaitlistModal({
               onClick={onClose}
               className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 rounded-lg font-medium"
             >
-              Done
+              Got it
             </Button>
           </motion.div>
         </DialogContent>

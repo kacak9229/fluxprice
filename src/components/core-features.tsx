@@ -92,7 +92,7 @@ export default function CoreFeatures() {
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               Profit-safe dynamic pricing adapts to real-time demand helping you earn more when demand spikes and keep sales flowing when demand slows.
               </p>
-              <div className="grid grid-cols-3 gap-4 mb-8">
+              {/* <div className="grid grid-cols-3 gap-4 mb-8">
                 <div className="text-center p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
                   <div className="text-xl font-bold text-blue-600">+10%</div>
                   <div className="text-xs text-gray-600">Revenue</div>
@@ -105,7 +105,7 @@ export default function CoreFeatures() {
                   <div className="text-xl font-bold text-gray-900">128</div>
                   <div className="text-xs text-gray-600">Price Changes</div>
                 </div>
-              </div>
+              </div> */}
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
