@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
+import { Suspense } from "react";
+import FacebookPixel from "@/components/FacebookPixel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,6 +40,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Suspense fallback={null}>
+          <FacebookPixel pixelId={process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1217233720342571"} />
+        </Suspense>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ""} />
         {process.env.NEXT_PUBLIC_HOTJAR_ID && (
           <Script

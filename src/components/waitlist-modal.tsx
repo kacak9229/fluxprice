@@ -14,6 +14,38 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
+// Extend Window interface to include fbq
+declare global {
+  interface Window {
+    fbq: (action: string, event: string, data?: Record<string, unknown>, options?: { eventID?: string }) => void;
+  }
+}
+
+/**
+ * Generates a unique event ID for deduplication between Pixel and CAPI
+ */
+function generateEventId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+}
+
+/**
+ * Get Facebook browser cookies (_fbp and _fbc) for better attribution
+ */
+function getFbCookies(): { fbp?: string; fbc?: string } {
+  if (typeof document === "undefined") return {};
+  
+  const cookies = document.cookie.split(";").reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split("=");
+    acc[key] = value;
+    return acc;
+  }, {} as Record<string, string>);
+  
+  return {
+    fbp: cookies["_fbp"],
+    fbc: cookies["_fbc"],
+  };
+}
+
 interface WaitlistModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -35,14 +67,30 @@ export default function WaitlistModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Generate a unique event ID for deduplication between Pixel and CAPI
+    const eventId = generateEventId();
+    const fbCookies = getFbCookies();
     
     try {
+      // Fire client-side Pixel Lead event with event ID for deduplication
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("track", "Lead", { content_name: planName }, { eventID: eventId });
+      }
+
+      // Send email and trigger server-side CAPI event
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email,
+          eventId,
+          fbp: fbCookies.fbp,
+          fbc: fbCookies.fbc,
+          planName,
+        }),
       });
 
       if (!response.ok) {

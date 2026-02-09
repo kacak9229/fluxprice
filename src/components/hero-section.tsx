@@ -147,7 +147,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 text-balance text-5xl md:text-5xl lg:mt-16 xl:text-[4.25rem]"
                 >
-                  Boost Shopify Sales Up to 30% with Profit-Safe Dynamic Pricing
+                  Boost Shopify Sales with Profit-Safe Dynamic Pricing
                 </TextEffect>
                 <AnimatedTextWithBold />
 
