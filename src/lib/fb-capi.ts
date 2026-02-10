@@ -102,6 +102,10 @@ export async function sendFbEvent(event: EventData) {
     payload.test_event_code = FB_TEST_EVENT_CODE;
   }
 
+  // Log request payload for testing (server logs only)
+  console.log("[FB CAPI] Request URL:", `https://graph.facebook.com/v24.0/${FB_PIXEL_ID}/events?access_token=...`);
+  console.log("[FB CAPI] Request payload:", JSON.stringify(payload, null, 2));
+
   try {
     const response = await fetch(
       `https://graph.facebook.com/v24.0/${FB_PIXEL_ID}/events?access_token=${FB_ACCESS_TOKEN}`,

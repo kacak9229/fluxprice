@@ -1,0 +1,22 @@
+// Prisma schema for email open tracking (one conversion per user)
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model EmailOpenEvent {
+  id          String    @id @default(uuid())
+  token       String    @unique
+  email       String
+  eventId     String    @map("event_id")
+  convertedAt DateTime? @map("converted_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("email_open_events")
+}

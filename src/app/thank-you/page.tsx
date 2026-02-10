@@ -1,11 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Github, Twitter, Linkedin } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 
-export default function ThankYouPage() {
+function ThankYouContent() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+  const tracked = useRef(false);
+
+  // When landing with ?token=..., fire track-open once so click-through counts as conversion
+  useEffect(() => {
+    if (!token || tracked.current) return;
+    tracked.current = true;
+    const base =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : process.env.NEXT_PUBLIC_APP_URL || "";
+    const img = new Image();
+    img.src = `${base}/api/track-open?token=${encodeURIComponent(token)}`;
+  }, [token]);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex flex-col">
       {/* Navigation */}
@@ -87,6 +105,20 @@ export default function ThankYouPage() {
         <p>&copy; {new Date().getFullYear()} FluxPrice AI. All rights reserved.</p>
       </footer>
     </div>
+  );
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white">
+          <div className="animate-pulse text-slate-500">Loading...</div>
+        </div>
+      }
+    >
+      <ThankYouContent />
+    </Suspense>
   );
 }
 

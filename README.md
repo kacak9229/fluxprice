@@ -20,6 +20,13 @@ NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION=6
 # Resend Email Service
 RESEND_API_KEY=
 RESEND_AUDIENCE_ID=
+
+# Database (Prisma) – required for email open tracking
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+
+# Base URL for emails and tracking (Confirm link, pixel, CAPI). Production: https://fluxpriceai.com
+NEXT_PUBLIC_APP_URL=https://fluxpriceai.com
+# Optional: server-side fallback (e.g. APP_URL) if NEXT_PUBLIC_APP_URL is not set
 ```
 
 ### Facebook Conversions API Setup
@@ -46,6 +53,15 @@ RESEND_AUDIENCE_ID=
 5. **Optional**: Install [Meta Pixel Helper](https://chrome.google.com/webstore/detail/meta-pixel-helper/fdgfkebogiimcoedlicjlajpkdmockpc) to confirm Pixel events in the browser.
 
 6. **Production**: Remove `FB_TEST_EVENT_CODE` from env so events go to live Overview instead of Test Events.
+
+### Database and email open tracking
+
+The app uses **Prisma** with PostgreSQL (e.g. Neon or Vercel Postgres) to record email open events. When a user opens the welcome email, a tracking pixel calls `GET /api/track-open?token=...`; the server fires a Facebook CAPI Lead event **once per recipient** (strict one-open-per-user).
+
+- Set `DATABASE_URL` to your Postgres connection string.
+- Install dependencies and generate Prisma client: `npm install` (runs `prisma generate` via postinstall).
+- Run migrations: `npx prisma migrate deploy` (or `npx prisma migrate dev` in development).
+- The tracking pixel URL in emails uses `NEXT_PUBLIC_APP_URL` if set, otherwise `https://fluxpriceai.com` or the Vercel deployment URL.
 
 ## Getting Started
 

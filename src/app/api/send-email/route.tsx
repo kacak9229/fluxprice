@@ -1,9 +1,20 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendFbEvent } from '@/lib/fb-capi';
+import { prisma } from '@/lib/prisma';
+import { randomUUID } from 'crypto';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const audienceId = process.env.RESEND_AUDIENCE_ID;
+
+function getBaseUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    process.env.APP_URL ||
+    "http://localhost:3000"
+  );
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,7 +24,22 @@ export async function POST(request: NextRequest) {
     const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0] || request.headers.get("x-real-ip");
     const userAgent = request.headers.get("user-agent");
 
-    // 1. Send the Welcome Email
+    // 1. Create email open tracking row (unique token for pixel; one conversion per open)
+    const token = randomUUID();
+    await prisma.emailOpenEvent.create({
+      data: {
+        token,
+        email,
+        eventId: eventId ?? `signup-${Date.now()}`,
+        convertedAt: null,
+      },
+    });
+
+    const baseUrl = getBaseUrl();
+    const trackingUrl = `${baseUrl}/api/track-open?token=${token}`;
+    const thankYouUrl = `${baseUrl}/thank-you?token=${token}`;
+
+    // 2. Send the Welcome Email (with tracking pixel)
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: 'FluxPrice Waitlist Confirmation <hello@fluxpriceai.com>',
       to: [email],
@@ -36,7 +62,7 @@ export async function POST(request: NextRequest) {
                   <!-- Header with Logo -->
                   <tr>
                     <td align="center" style="padding: 40px 0 20px 0; background-color: #ffffff;">
-                      <img src="https://fluxpriceai.com/fluxprice2.png" alt="FluxPrice AI" width="180" style="display: block; border: 0; max-width: 100%; height: auto;" />
+                      <img src="${baseUrl}/fluxprice2.png" alt="FluxPrice AI" width="180" style="display: block; border: 0; max-width: 100%; height: auto;" />
                     </td>
                   </tr>
 
@@ -55,7 +81,7 @@ export async function POST(request: NextRequest) {
                   <!-- CTA Button -->
                   <tr>
                     <td align="center" style="padding: 0 40px 48px 40px;">
-                      <a href="https://fluxpriceai.com/thank-you" style="background-color: #000000; color: #ffffff; padding: 16px 36px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block; transition: background-color 0.2s;">
+                      <a href="${thankYouUrl}" style="background-color: #000000; color: #ffffff; padding: 16px 36px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block; transition: background-color 0.2s;">
                         Confirm Email
                       </a>
                     </td>
@@ -69,7 +95,7 @@ export async function POST(request: NextRequest) {
                         San Francisco, CA
                       </p>
                       <div style="margin-top: 16px;">
-                        <a href="https://fluxpriceai.com" style="color: #2563eb; text-decoration: none; font-size: 12px; margin: 0 10px;">Website</a>
+                        <a href="${baseUrl}" style="color: #2563eb; text-decoration: none; font-size: 12px; margin: 0 10px;">Website</a>
                       </div>
                     </td>
                   </tr>
@@ -77,6 +103,7 @@ export async function POST(request: NextRequest) {
               </td>
             </tr>
           </table>
+          <img src="${trackingUrl}" width="1" height="1" alt="" style="display:block;border:0;" />
         </body>
         </html>
       `,
@@ -116,7 +143,7 @@ export async function POST(request: NextRequest) {
       await sendFbEvent({
         eventName: "Lead",
         eventId: eventId,
-        eventSourceUrl: "https://fluxpriceai.com",
+        eventSourceUrl: baseUrl,
         userData: {
           email: email,
           clientIp: clientIp || undefined,
