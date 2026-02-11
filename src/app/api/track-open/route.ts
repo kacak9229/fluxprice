@@ -37,17 +37,20 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // Only fire CAPI once per token (deduplication: email open or thank-you)
     if (row.convertedAt != null) {
       return new NextResponse(ONE_PX_GIF, {
         headers: { "Content-Type": "image/gif" },
       });
     }
 
+    // Use browser context stored at submit; fallback to this request for IP/UA if missing
     const clientIp =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      request.headers.get("x-real-ip") ||
+      row.clientIp ??
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      request.headers.get("x-real-ip") ??
       undefined;
-    const userAgent = request.headers.get("user-agent") || undefined;
+    const userAgent = row.userAgent ?? request.headers.get("user-agent") ?? undefined;
 
     await sendFbEvent({
       eventName: "Lead",
@@ -57,6 +60,8 @@ export async function GET(request: NextRequest) {
         email: row.email,
         clientIp,
         userAgent,
+        fbp: row.fbp ?? undefined,
+        fbc: row.fbc ?? undefined,
       },
       customData: { content_name: "EmailOpened" },
     });

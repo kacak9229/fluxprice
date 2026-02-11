@@ -1,6 +1,5 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
-import { sendFbEvent } from '@/lib/fb-capi';
 import { prisma } from '@/lib/prisma';
 import { randomUUID } from 'crypto';
 
@@ -18,11 +17,14 @@ function getBaseUrl(): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, eventId, fbp, fbc, planName } = await request.json();
+    const { email, eventId, fbp, fbc, planName, planPrice } = await request.json();
 
-    // Get client IP and User Agent from request headers for CAPI
-    const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0] || request.headers.get("x-real-ip");
-    const userAgent = request.headers.get("user-agent");
+    // Browser context from submit (for CAPI when they open email / thank-you)
+    const clientIp =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      null;
+    const userAgent = request.headers.get("user-agent") || null;
 
     // 1. Create email open tracking row (unique token for pixel; one conversion per open)
     const token = randomUUID();
@@ -31,6 +33,12 @@ export async function POST(request: NextRequest) {
         token,
         email,
         eventId: eventId ?? `signup-${Date.now()}`,
+        clientIp,
+        userAgent,
+        fbp: fbp ?? null,
+        fbc: fbc ?? null,
+        planName: planName ?? null,
+        planPrice: planPrice ?? null,
         convertedAt: null,
       },
     });
@@ -136,28 +144,6 @@ export async function POST(request: NextRequest) {
     } catch (contactError) {
       console.error('Failed to add contact to audience:', contactError);
       // We don't fail the request if just adding to list fails, as the email was sent
-    }
-
-    // 3. Send Facebook Conversions API Lead event (server-side)
-    try {
-      await sendFbEvent({
-        eventName: "Lead",
-        eventId: eventId,
-        eventSourceUrl: baseUrl,
-        userData: {
-          email: email,
-          clientIp: clientIp || undefined,
-          userAgent: userAgent || undefined,
-          fbp: fbp,
-          fbc: fbc,
-        },
-        customData: {
-          content_name: planName || "Early Access",
-        },
-      });
-    } catch (fbError) {
-      console.error('Failed to send Facebook CAPI event:', fbError);
-      // Don't fail the request if CAPI fails, as the email was sent successfully
     }
 
     return NextResponse.json(emailData);

@@ -90,6 +90,7 @@ export default function WaitlistModal({
           fbp: fbCookies.fbp,
           fbc: fbCookies.fbc,
           planName,
+          planPrice,
         }),
       });
 
