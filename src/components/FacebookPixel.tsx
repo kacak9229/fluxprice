@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 // Extend Window interface to include fbq
 declare global {
   interface Window {
-    fbq: (action: string, event: string, data?: Record<string, unknown>) => void;
+    fbq: (action: string, event: string, data?: Record<string, unknown>, options?: { eventID?: string }) => void;
   }
 }
 
