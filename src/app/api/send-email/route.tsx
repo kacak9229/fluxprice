@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { sendFbEvent } from '@/lib/fb-capi';
 import { randomUUID } from 'crypto';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -44,6 +45,22 @@ export async function POST(request: NextRequest) {
     });
 
     const baseUrl = getBaseUrl();
+
+    // Fire CAPI CompleteRegistration at submit (same eventId as Pixel for deduplication)
+    await sendFbEvent({
+      eventName: "CompleteRegistration",
+      eventId: eventId ?? undefined,
+      eventSourceUrl: baseUrl,
+      userData: {
+        email,
+        clientIp: clientIp ?? undefined,
+        userAgent: userAgent ?? undefined,
+        fbp: fbp ?? undefined,
+        fbc: fbc ?? undefined,
+      },
+      customData: planName ? { content_name: planName } : undefined,
+    });
+
     const trackingUrl = `${baseUrl}/api/track-open?token=${token}`;
     const thankYouUrl = `${baseUrl}/thank-you?token=${token}`;
 

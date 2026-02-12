@@ -74,9 +74,9 @@ export default function WaitlistModal({
     
     try {
       // Fire client-side Pixel Lead event with event ID for deduplication
-      // if (typeof window !== "undefined" && window.fbq) {
-      //   window.fbq("track", "Lead", { content_name: planName }, { eventID: eventId });
-      // }
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("track", "CompleteRegistration", { content_name: planName }, { eventID: eventId });
+      }
 
       // Send email and trigger server-side CAPI event
       const response = await fetch('/api/send-email', {
