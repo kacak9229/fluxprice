@@ -2,54 +2,110 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
+
+type Step = "loading" | "success" | "error" | "expired";
 
 function ThankYouContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const tracked = useRef(false);
+  const [step, setStep] = useState<Step>("loading");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // When landing with ?token=..., fire track-open once so click-through counts as conversion
-  useEffect(() => {
-    if (!token || tracked.current) return;
-    tracked.current = true;
-    const base =
-      typeof window !== "undefined"
-        ? window.location.origin
-        : process.env.NEXT_PUBLIC_APP_URL || "";
-    const img = new Image();
-    img.src = `${base}/api/track-open?token=${encodeURIComponent(token)}`;
+  // One click from email: land with token → verify immediately via POST → show success
+  const verifyOnLoad = useCallback(async () => {
+    if (!token) {
+      setStep("error");
+      setErrorMessage("Missing link.");
+      return;
+    }
+    try {
+      const base =
+        typeof window !== "undefined"
+          ? window.location.origin
+          : process.env.NEXT_PUBLIC_APP_URL || "";
+      const res = await fetch(`${base}/api/verify-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        if (res.status === 400 && (data.error === "Link expired" || data.error === "Invalid token")) {
+          setStep("expired");
+          setErrorMessage(data.error === "Link expired" ? "This link has expired." : "This link is invalid.");
+        } else {
+          setStep("error");
+          setErrorMessage(data.error || "Something went wrong.");
+        }
+        return;
+      }
+
+      setStep("success");
+    } catch {
+      setStep("error");
+      setErrorMessage("Something went wrong.");
+    }
   }, [token]);
 
+  useEffect(() => {
+    verifyOnLoad();
+  }, [verifyOnLoad]);
+
+  if (step === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white">
+        <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
+      </div>
+    );
+  }
+
+  if (step === "expired" || step === "error") {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex flex-col">
+        <header className="px-6 h-16 flex items-center border-b border-slate-100 bg-white/50 backdrop-blur-md fixed top-0 w-full z-50">
+          <Link href="/" className="flex items-center gap-2">
+            <img src="/fluxprice2.png" alt="FluxPrice" className="h-8 object-contain" />
+          </Link>
+        </header>
+        <main className="flex-grow flex items-center justify-center px-6 pt-24 pb-12">
+          <div className="max-w-md w-full text-center space-y-6">
+            <h1 className="text-2xl font-bold text-slate-900">
+              {step === "expired" ? "Link expired" : "Something went wrong"}
+            </h1>
+            <p className="text-slate-600">{errorMessage}</p>
+            <Link href="/">
+              <Button variant="outline" className="rounded-xl">Return home</Button>
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // step === "success"
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex flex-col">
-      {/* Navigation */}
       <header className="px-6 h-16 flex items-center justify-between border-b border-slate-100 bg-white/50 backdrop-blur-md fixed top-0 w-full z-50">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-30 h-30 rounded-lg flex items-center justify-center overflow-hidden">
+        <div className="w-30 h-30 rounded-lg flex items-center justify-center overflow-hidden">
              <img src="/fluxprice2.png" alt="FluxPrice" className="w-full h-full object-contain" />
           </div>
-          
         </Link>
       </header>
 
-      {/* Main Content */}
       <main className="flex-grow flex items-center justify-center px-6 pt-24 pb-12">
         <div className="max-w-2xl w-full text-center space-y-12">
-          {/* Success Animation/Icon */}
           <div className="relative mx-auto w-24 h-24">
-            <div className="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-25"></div>
+            <div className="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-25" />
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-              }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
               className="relative w-full h-full bg-green-50 rounded-full flex items-center justify-center"
             >
               <CheckCircle2 className="w-12 h-12 text-green-600" />
@@ -65,7 +121,6 @@ function ThankYouContent() {
             </p>
           </div>
 
-          {/* Next Steps Card */}
           <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm max-w-md mx-auto text-left">
             <h3 className="font-semibold text-slate-900 mb-6 flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm">i</span>
@@ -89,7 +144,6 @@ function ThankYouContent() {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/">
               <Button variant="outline" className="h-12 px-8 rounded-xl border-slate-200 hover:bg-slate-50 hover:text-slate-900">
@@ -100,7 +154,6 @@ function ThankYouContent() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="py-8 text-center text-sm text-slate-400">
         <p>&copy; {new Date().getFullYear()} FluxPrice AI. All rights reserved.</p>
       </footer>
@@ -113,7 +166,7 @@ export default function ThankYouPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white">
-          <div className="animate-pulse text-slate-500">Loading...</div>
+          <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
         </div>
       }
     >
@@ -121,4 +174,3 @@ export default function ThankYouPage() {
     </Suspense>
   );
 }
-
